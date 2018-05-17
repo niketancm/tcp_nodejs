@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 'use strict';
+//for data to be pushed into database
+const models = require('./data-models/models');
 
 // load the Node.js TCP library
 const net = require('net');
@@ -25,7 +27,29 @@ function onClientConnected(socket) {
       // new line characters [\r or \n]
       let m = data.toString().replace(/[\n\r]*$/, '');
 
-    //   var messageArray = m
+      // split the message
+      var incomingData = m.split(',');
+      incomingData[9] = parseFloat(incomingData[9]);
+
+      var dataWrite = new dataModel({
+          DATETIME: incomingData[0],
+          REGION: incomingData[1],
+          LOCATION: incomingData[2],
+          PLANT: incomingData[3],
+          LINE: incomingData[4],
+          MODEL: incomingData[5],
+          OPERATOR: incomingData[6],
+          DEVICEID: incomingData[7],
+          PARAMATER: incomingData[8],
+          DATA: incomingData[9]
+      });
+
+      incomingData.save(function(error){
+          console.log("Your data has been saved!");
+          if(error) {
+              console.error(error);
+          }
+      })
 
       // Logging the message on the server
       console.log(`${clientName} said: ${m}`);
