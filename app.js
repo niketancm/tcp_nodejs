@@ -66,7 +66,14 @@ function onClientConnected(socket) {
         const dataInsert = new Data;
       // split the message
       var incomingData = m.split(',');
-    //   incomingData[9] = parseFloat(incomingData[9]);
+      
+      // for all the 10 input parameters
+      //incomingData[9] = parseFloat(incomingData[9]);
+      
+      //for just the two elements, last data is float type
+      incomingData[1] = parseFloat(incomingData[1]);
+
+      //save the incoming data to the mongoose model to be inserted
       dataInsert.PARAMATER = incomingData[0];
       dataInsert.data = data[1];
 
