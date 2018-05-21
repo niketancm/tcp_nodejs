@@ -5,7 +5,7 @@
 const mongoose = require('mongoose');
 
 //connect to the database
-mongoose.connect('mongodb://localhost:27017/myTestDB`');
+mongoose.connect('mongodb://localhost:27017/myTestDB1');
 
 var db = mongoose.connection;
 
@@ -15,12 +15,11 @@ db.on('error', function (err) {
     });
     
     db.once('open', function () {
-    console.log('connected.');
+    console.log('connected to MONGO!.');
     });       
 
 //define a schema
 var Schema = mongoose.Schema;
-
 var dataSchema = new Schema ({
     // DATETIME: Date,
     // REGION: String,
@@ -33,8 +32,9 @@ var dataSchema = new Schema ({
     PARAMATER: String,
     DATA: Number
 });
+
 //define the model for the schema
-mongoose.model('data', dataSchema);
+// mongoose.model('dataModel', dataSchema);
 
 //configure the data model    
 // var dataModel = mongoose.model('dataModel',     dataSchema);
@@ -62,8 +62,10 @@ function onClientConnected(socket) {
       // getting the string message and also trimming
       // new line characters [\r or \n]
       let m = data.toString().replace(/[\n\r]*$/, '');
-        var Data = mongoose.model('data');
-        const dataInsert = new Data;
+
+      //define a model dataModel
+      var Data = mongoose.model('dataModel', dataSchema);
+      const dataInsert = new Data;
       // split the message
       var incomingData = m.split(',');
       
@@ -75,7 +77,10 @@ function onClientConnected(socket) {
 
       //save the incoming data to the mongoose model to be inserted
       dataInsert.PARAMATER = incomingData[0];
-      dataInsert.data = data[1];
+      dataInsert.DATA = incomingData[1];
+
+      console.log(dataInsert.PARAMATER);
+      console.log(dataInsert.DATA);
 
       dataInsert.save(function(error){
           console.log("Your data has been saved!");
@@ -97,4 +102,3 @@ function onClientConnected(socket) {
         console.log(`${clientName} disconnected.`);
     });
 }
-  
