@@ -22,13 +22,13 @@ db.on('error', function (err) {
 var Schema = mongoose.Schema;
 var dataSchema = new Schema ({
     // DATETIME: Date,
-    // REGION: String,
-    // LOCATION: String,
-    // PLANT: String,
-    // LINE: String,
-    // MODEL: String,
-    // OPERATOR: String,
-    // DEVICEID: String,
+    REGION: String,
+    LOCATION: String,
+    PLANT: String,
+    LINE: String,
+    MODEL: String,
+    OPERATOR: String,
+    DEVICEID: String,
     PARAMATER: String,
     DATA: Number
 });
@@ -66,26 +66,39 @@ function onClientConnected(socket) {
       //define a model dataModel
       var Data = mongoose.model('dataModel', dataSchema);
       const dataInsert = new Data;
+      
       // split the message
       var incomingData = m.split(',');
       
       // for all the 10 input parameters
       //incomingData[9] = parseFloat(incomingData[9]);
+      //for 9 inputs not considering date
+      incomingData[8] = parseFloat(incomingData[8]);
+      
       
       //for just the two elements, last data is float type
-      incomingData[1] = parseFloat(incomingData[1]);
+    //   incomingData[1] = parseFloat(incomingData[1]);
 
       //save the incoming data to the mongoose model to be inserted
-      dataInsert.PARAMATER = incomingData[0];
-      dataInsert.DATA = incomingData[1];
+        dataInsert.REGION = incomingData[0];
+        dataInsert.LOCATION = incomingData[1];
+        dataInsert.PLANT = incomingData[2];
+        dataInsert.LINE = incomingData[3];
+        dataInsert.MODEL= incomingData[4];
+        dataInsert.OPERATOR = incomingData[5];
+        dataInsert.DEVICEID = incomingData[6];
+        dataInsert.PARAMATER = incomingData[7];
+        dataInsert.DATA = incomingData[8];
 
       console.log(dataInsert.PARAMATER);
       console.log(dataInsert.DATA);
 
       dataInsert.save(function(error){
-          console.log("Your data has been saved!");
           if(error) {
-              console.error(error);
+            //   console.error(error);
+            console.log('Send the data in correct format');
+          }else{
+            console.log("Your data has been saved!");
           }
       })
 
