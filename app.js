@@ -43,7 +43,7 @@ var dataSchema = new Schema ({
 const net = require('net');
 
 const PORT = 5000;
-const ADDRESS = '127.0.0.1';
+const ADDRESS = '0.0.0.0'; //to listen to all incoming data
 
 let server = net.createServer(onClientConnected);
 server.listen(PORT, ADDRESS);
