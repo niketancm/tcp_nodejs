@@ -80,15 +80,15 @@ function onClientConnected(socket) {
     //   incomingData[1] = parseFloat(incomingData[1]);
 
       //save the incoming data to the mongoose model to be inserted
-        dataInsert.REGION = incomingData[0];
-        dataInsert.LOCATION = incomingData[1];
-        dataInsert.PLANT = incomingData[2];
-        dataInsert.LINE = incomingData[3];
-        dataInsert.MODEL= incomingData[4];
-        dataInsert.OPERATOR = incomingData[5];
-        dataInsert.DEVICEID = incomingData[6];
-        dataInsert.PARAMATER = incomingData[7];
-        dataInsert.DATA = incomingData[8];
+      dataInsert.REGION = incomingData[0];
+      dataInsert.LOCATION = incomingData[1];
+      dataInsert.PLANT = incomingData[2];
+      dataInsert.LINE = incomingData[3];
+      dataInsert.MODEL= incomingData[4];
+      dataInsert.OPERATOR = incomingData[5];
+      dataInsert.DEVICEID = incomingData[6];
+      dataInsert.PARAMATER = incomingData[7];
+      dataInsert.DATA = incomingData[8];
 
       console.log(dataInsert.PARAMATER);
       console.log(dataInsert.DATA);
