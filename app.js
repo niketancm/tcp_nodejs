@@ -100,7 +100,7 @@ function onClientConnected(socket) {
           }else{
             console.log("Your data has been saved!");
           }
-      })
+      });
 
       // Logging the message on the server
       console.log(`${clientName} said: ${m}`);
