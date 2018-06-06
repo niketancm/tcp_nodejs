@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 'use strict';
-//for data to be pushed into database
-// const models = require('./data-models/models');
+
 const mongoose = require('mongoose');
 
 //connect to the database
@@ -33,17 +32,11 @@ var dataSchema = new Schema ({
     DATA: Number
 });
 
-//define the model for the schema
-// mongoose.model('dataModel', dataSchema);
-
-//configure the data model    
-// var dataModel = mongoose.model('dataModel',     dataSchema);
-
 // load the Node.js TCP library
 const net = require('net');
 
 const PORT = 5000;
-const ADDRESS = '0.0.0.0'; //to listen to all incoming data
+const ADDRESS = '127.0.0.1'; //to listen to all incoming data
 
 let server = net.createServer(onClientConnected);
 server.listen(PORT, ADDRESS);
