@@ -4,7 +4,7 @@
 const mongoose = require('mongoose');
 
 //connect to the database
-mongoose.connect('mongodb://localhost:27017/myTestDB1');
+mongoose.connect('mongodb://localhost:27017/esya-test');
 
 var db = mongoose.connection;
 
@@ -79,13 +79,6 @@ function onClientConnected(socket) {
                 //define a model dataModel
                 var Data = mongoose.model('dataModel',dataSchema);
                 const dataInsert = new Data;
-                // for all the 10 input parameters exluding the date
-                incomingData[9] = parseFloat(incomingData[9]);
-
-                //for 9 inputs not considering id
-                // incomingData[8] = parseFloat(incomingData[8]);
-                // //for just the two elements, last data is float type
-                // //incomingData[1] = parseFloat(incomingData[1]);
 
                 //save the incoming data to the mongoose model to be inserted
                 dataInsert.REGION = incomingData[1];
@@ -96,7 +89,7 @@ function onClientConnected(socket) {
                 dataInsert.OPERATOR = incomingData[6];
                 dataInsert.DEVICEID = incomingData[7];
                 dataInsert.PARAMETER = incomingData[8];
-                dataInsert.DATA = incomingData[9];
+                dataInsert.DATA = parseFloat(incomingData[9]);
                 //console.log(dataInsert.PARAMATER);
                 //console.log(dataInsert.DATA);
                 dataInsert.save(function(error){
