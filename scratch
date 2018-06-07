@@ -1,0 +1,13 @@
+var name3 = "node0010";
+var z = "person";
+var x = "1";
+var y = "2";
+var name1 = z+x;
+var name2 = z+y;
+sockets[name1] = a;
+sockets[name2] = b;
+m = name3.split(',');
+function myobj (myobj1, myobj2, "key1", "key2"){
+  console.log("HELLLLLOOOO");
+  return {"key1":myobj1, "key2":myobj2}
+}
