@@ -36,7 +36,13 @@ var dataSchema = new Schema ({
 const net = require('net');
 
 const PORT = 5000;
-const ADDRESS = '127.0.0.1'; //to listen to all incoming data
+// const ADDRESS = '0.0.0.0'; //to listen to all incoming data
+const ADDRESS = '127.0.0.1'; //to listen to all localhost
+
+var iotSockets = {};
+var streamReq = {};
+var iotId = ttkId10;
+var streamId = ttknode10;
 
 let server = net.createServer(onClientConnected);
 server.listen(PORT, ADDRESS);
@@ -44,13 +50,19 @@ server.listen(PORT, ADDRESS);
 function onClientConnected(socket) {
 
     // Giving a name to this client
-    let clientName = `${socket.remoteAddress}:${socket.remotePort}`;
-
+    // let clientName = `${socket.remoteAddress}:${socket.remotePort}`;
     // Logging the message on the server
     console.log(`${clientName} connected.`);
 
     // Triggered on data received by this client
     socket.on('data', (data) => {
+    let clientName = `${socket.remoteAddress}:${socket.remotePort}`;
+        
+
+
+
+
+
 
       // getting the string message and also trimming
       // new line characters [\r or \n]
@@ -83,8 +95,8 @@ function onClientConnected(socket) {
       dataInsert.PARAMATER = incomingData[7];
       dataInsert.DATA = incomingData[8];
 
-      console.log(dataInsert.PARAMATER);
-      console.log(dataInsert.DATA);
+    //   console.log(dataInsert.PARAMATER);
+    //   console.log(dataInsert.DATA);
 
       dataInsert.save(function(error){
           if(error) {
