@@ -23,3 +23,7 @@ function myobj (myobj1, myobj2, "key1", "key2"){
                     // console.log(sendData);
                 // }
             // }
+// socket.write(`We got your message (${m}). Thanks!\n`);
+// console.log("SERVER: Incoming Data: " + incomingData[10]+ " ");
+// console.log("SERVER:: " + incomingData);
+                // console.log(`SERVER: client ${clientName} connected.`);

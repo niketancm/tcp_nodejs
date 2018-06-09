@@ -13,7 +13,6 @@ var tempData = [23.147,23.117,23.105,23.096,23.123,23.124,23.118,23.098,23.151,2
 // data is what the server sent to this socket
     client.on('data', function(data) {
         let incomingData = data.toString().replace(/[\n\r]*$/, '');
-
         console.log("data received:" + incomingData);
         if(incomingData === "101"){
             // console.log(incomingData[0]);
@@ -23,7 +22,7 @@ var tempData = [23.147,23.117,23.105,23.096,23.123,23.124,23.118,23.098,23.151,2
             var  i = 1;
             console.log("CLIENT: got 'send' from server");
             var interval = setInterval(function () {
-                if(i >= tempData.length){
+                if(i >= (tempData.length- 1)){
                     clearInterval(interval);
                 }
                 sendData = mess + tempData[i];

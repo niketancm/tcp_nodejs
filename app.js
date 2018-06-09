@@ -52,7 +52,6 @@ function onClientConnected(socket) {
     // Giving a name to this client
     let clientName = `${socket.remoteAddress}:${socket.remotePort}`;
     // Logging the message on the server
-    // console.log(`${clientName} connected.`);
     socket.write("101\n")
 
     // Triggered on data received by this client
@@ -65,8 +64,8 @@ function onClientConnected(socket) {
         if(incomingData[0] === streamId){ //this is a req conn from the nodejs/express
             if(!streamReq[clientName]){//new connection
                 //register the scoket as a key value pair, key: clientname and value: socket
+                console.log(`SERVER: CLIENT ${clientName} connected.`);
                 streamReq[clientName] = socket;
-                // console.log(`SERVER: client ${clientName} connected.`);
             }else{//connection already present
                 return;
             }
@@ -81,9 +80,6 @@ function onClientConnected(socket) {
 
                 return;
             }else{//iot connections already there, insert data
-                // count ++;
-                // console.log("SERVER: Incoming Data: " + incomingData[10]+ " ");
-                // console.log("SERVER:: " + incomingData);
                 const dataInsert = new Data;
                 //save the incoming data to the mongoose model to be inserted
                 dataInsert.REGION = incomingData[1];
@@ -95,8 +91,6 @@ function onClientConnected(socket) {
                 dataInsert.DEVICEID = incomingData[7];
                 dataInsert.PARAMETER = incomingData[8];
                 dataInsert.DATA = parseFloat(incomingData[9]);
-                //console.log(dataInsert.PARAMATER);
-                //console.log(dataInsert.DATA);
                 dataInsert.save(function(error){
                     if(error) {
                       //   console.error(error);
@@ -108,10 +102,10 @@ function onClientConnected(socket) {
                 console.log(incomingData);
                 //Send the data to the clients in reqSockets
                 // socket.write(`We got your message (${m}). Thanks!\n`);
-                // Object.entries(streamReq).forEach(([key, cs]) => {
-                //     cs.write(incomingData[9]);
-                //     // cs.write(incomingData[1]);                    
-                // });
+                Object.entries(streamReq).forEach(([key, cs]) => {
+                    cs.write(incomingData[9]);
+                    // cs.write(incomingData[1]);                    
+                });
             }
         }
     });
