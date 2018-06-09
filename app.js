@@ -76,13 +76,14 @@ function onClientConnected(socket) {
                 iotSockets[clientName] = socket;
                 // Logging the message on the server
                 console.log(`SERVER: IOT ${clientName} connected.`);
+                console.log(`SERVER: Sending 'send' to client to send the data`);
                 socket.write("send"); //remove this
 
                 return;
             }else{//iot connections already there, insert data
                 // count ++;
                 // console.log("SERVER: Incoming Data: " + incomingData[10]+ " ");
-                console.log("SERVER:: " + incomingData);
+                // console.log("SERVER:: " + incomingData);
                 const dataInsert = new Data;
                 //save the incoming data to the mongoose model to be inserted
                 dataInsert.REGION = incomingData[1];

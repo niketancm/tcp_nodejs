@@ -11,3 +11,15 @@ function myobj (myobj1, myobj2, "key1", "key2"){
   console.log("HELLLLLOOOO");
   return {"key1":myobj1, "key2":myobj2}
 }
+
+            // for(var i = 0; i < tempData.length; i++){
+            //     // sendData = mess + tempData[i] +","+ i+ ",";
+            //     sendData = mess + tempData[i] +","+ i;
+
+            //     // console.log(i);
+            //     // if(incomingData === "sendNext"){
+            //         // console.log(i);
+                    // client.write(sendData);
+                    // console.log(sendData);
+                // }
+            // }

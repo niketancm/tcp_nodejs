@@ -17,20 +17,20 @@ var tempData = [23.147,23.117,23.105,23.096,23.123,23.124,23.118,23.098,23.151,2
         console.log("data received:" + incomingData);
         if(incomingData === "101"){
             // console.log(incomingData[0]);
-            console.log(incomingData + "supplying the clientId: ttkId10");
+            console.log("CLIENT: supplying the IOT ID: ttkId10");
             client.write("ttkId10");
         }else if(incomingData === "send"){
-            for(var i = 0; i < tempData.length; i++){
-                // sendData = mess + tempData[i] +","+ i+ ",";
-                sendData = mess + tempData[i] +","+ i;
-
-                // console.log(i);
-                // if(incomingData === "sendNext"){
-                    // console.log(i);
-                    client.write(sendData);
-                    console.log(sendData);
-                // }
-            }
+            var  i = 1;
+            console.log("CLIENT: got 'send' from server");
+            var interval = setInterval(function () {
+                if(i >= tempData.length){
+                    clearInterval(interval);
+                }
+                sendData = mess + tempData[i];
+                console.log(sendData);
+                client.write(sendData);
+               i++;    
+            }, 1000);
         }
     });
 
