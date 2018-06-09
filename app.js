@@ -2,9 +2,9 @@
 'use strict';
 
 const mongoose = require('mongoose');
+const net = require('net');  // load the Node.js TCP library
 
-//connect to the database
-mongoose.connect('mongodb://localhost:27017/esya-test');
+mongoose.connect('mongodb://localhost:27017/esya-test'); //connect to the database
 
 var db = mongoose.connection;
 
@@ -31,9 +31,8 @@ var dataSchema = new Schema ({
     PARAMETER: String,
     DATA: Number
 });
-
-// load the Node.js TCP library
-const net = require('net');
+ //define a model dataModel
+var Data = mongoose.model('dataModel',dataSchema);
 
 const PORT = 5000;
 // const ADDRESS = '0.0.0.0'; //to listen to all incoming data
@@ -43,6 +42,7 @@ var iotSockets = {};
 var streamReq = {};
 var iotId = "ttkId10";
 var streamId = "ttknode10";
+// var count = 0;
 
 let server = net.createServer(onClientConnected);
 server.listen(PORT, ADDRESS);
@@ -52,34 +52,38 @@ function onClientConnected(socket) {
     // Giving a name to this client
     let clientName = `${socket.remoteAddress}:${socket.remotePort}`;
     // Logging the message on the server
-    console.log(`${clientName} connected.`);
+    // console.log(`${clientName} connected.`);
     socket.write("101\n")
 
     // Triggered on data received by this client
     socket.on('data', (data) => {
-        // let clientName = `${socket.remoteAddress}:${socket.remotePort}`;
         // getting the string message and also trimming
         // new line characters [\r or \n]
         let m = data.toString().replace(/[\n\r]*$/, '');
         // split the message
         var incomingData = m.split(',');
-        if(incomingData[0] === streamId){ //this is a req conn to stream
+        if(incomingData[0] === streamId){ //this is a req conn from the nodejs/express
             if(!streamReq[clientName]){//new connection
                 //register the scoket as a key value pair, key: clientname and value: socket
                 streamReq[clientName] = socket;
+                // console.log(`SERVER: client ${clientName} connected.`);
             }else{//connection already present
                 return;
             }
         }else{//not stream id, these are iot connections
             if(!iotSockets[clientName]){//new iot connectons
-                //register the scoket as a key value pair, key: clientname and value: socket
+                //register the socket as a key value pair, key: clientname and value: socket
                 iotSockets[clientName] = socket;
+                // Logging the message on the server
+                console.log(`SERVER: IOT ${clientName} connected.`);
+                socket.write("send"); //remove this
+
+                return;
             }else{//iot connections already there, insert data
-
-                //define a model dataModel
-                var Data = mongoose.model('dataModel',dataSchema);
+                // count ++;
+                // console.log("SERVER: Incoming Data: " + incomingData[10]+ " ");
+                console.log("SERVER:: " + incomingData);
                 const dataInsert = new Data;
-
                 //save the incoming data to the mongoose model to be inserted
                 dataInsert.REGION = incomingData[1];
                 dataInsert.LOCATION = incomingData[2];
@@ -97,18 +101,16 @@ function onClientConnected(socket) {
                       //   console.error(error);
                       console.log('Send the data in correct format');
                     }else{
-                      console.log("Your data has been saved!");
+                      console.log("SERVER: Your data has been saved!");
                     }
                 });
-                // Logging the message on the server
-                // console.log(`${clientName} said: ${m}`);
-
+                console.log(incomingData);
                 //Send the data to the clients in reqSockets
                 // socket.write(`We got your message (${m}). Thanks!\n`);
-                Object.entries(streamReq).forEach(([key, cs]) => {
-                    cs.write(incomingData[9]);
-                    // cs.write(incomingData[1]);                    
-                });
+                // Object.entries(streamReq).forEach(([key, cs]) => {
+                //     cs.write(incomingData[9]);
+                //     // cs.write(incomingData[1]);                    
+                // });
             }
         }
     });
@@ -116,5 +118,6 @@ function onClientConnected(socket) {
     socket.on('end', () => {
         // Logging this message on the server
         console.log(`${clientName} disconnected.`);
+        //remove the sockets from the streamReq map{yet to be implemented}
     });
 }
