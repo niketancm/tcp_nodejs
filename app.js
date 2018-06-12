@@ -35,8 +35,8 @@ var dataSchema = new Schema ({
 var Data = mongoose.model('dataModel',dataSchema);
 
 const PORT = 5000;
-// const ADDRESS = '0.0.0.0'; //to listen to all incoming data
-const ADDRESS = '127.0.0.1'; //to listen to all localhost
+const ADDRESS = '0.0.0.0'; //to listen to all incoming data
+// const ADDRESS = '127.0.0.1'; //to listen to all localhost
 
 // var iotSockets = {};
 // var streamReq = {};
