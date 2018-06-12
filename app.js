@@ -62,7 +62,7 @@ function onClientConnected(socket) {
         let clientName = `${socket.remoteAddress}:${socket.remotePort}`;
         // getting the string message and also trimming
         // new line characters [\r or \n]
-        console.log(iotSock.size);
+        // console.log(iotSock.size);
         let m = data.toString().replace(/[\n\r]*$/, '');
         // split the message
         var incomingData = m.split(',');
@@ -86,46 +86,52 @@ function onClientConnected(socket) {
                 console.log(`SERVER: IOT ${clientName} connected.`);
                 // console.log(`SERVER: Sending 'send' to client to send the data`);
                 // socket.write("send"); //remove this
+                console.log(iotSock.size);                
                 // return;
-            }   
-            //iot connections already there, insert data
-            const dataInsert = new Data;
-            //save the incoming data to the mongoose model to be inserted
-            dataInsert.REGION = incomingData[1];
-            dataInsert.LOCATION = incomingData[2];
-            dataInsert.PLANT = incomingData[3];
-            dataInsert.LINE = incomingData[4];
-            dataInsert.MODEL= incomingData[5];
-            dataInsert.OPERATOR = incomingData[6];
-            dataInsert.DEVICEID = incomingData[7];
-            dataInsert.PARAMETER = incomingData[8];
-            dataInsert.DATA = parseFloat(incomingData[9]);
-            dataInsert.save(function(error){
-                if(error){
+            }//else{//iot connections already there, insert data
+                const dataInsert = new Data;
+                //save the incoming data to the mongoose model to be inserted
+                dataInsert.REGION = incomingData[1];
+                dataInsert.LOCATION = incomingData[2];
+                dataInsert.PLANT = incomingData[3];
+                dataInsert.LINE = incomingData[4];
+                dataInsert.MODEL= incomingData[5];
+                dataInsert.OPERATOR = incomingData[6];
+                dataInsert.DEVICEID = incomingData[7];
+                dataInsert.PARAMETER = incomingData[8];
+                dataInsert.DATA = parseFloat(incomingData[9]);
+                dataInsert.save(function(error){
+                    if(error) {
                       //   console.error(error);
                     console.log('Send the data in correct format');
                     }else{
                       console.log("SERVER: Your data has been saved!");
                     }
                 });
-            console.log(incomingData);
-            //Send the data to the clients in nodeSock
-            // socket.write(`We got your message (${m}). Thanks!\n`);
-            // Object.entries(nodeSock).forEach(([key, cs]) => {
-            //     cs.write(incomingData[9]);
-                // cs.write(incomingData[1]);                    
-            // });
-            nodeSock.forEach(function (soc, client, nodeSock) {
-               soc.write(incomingData[9]);
-            });
+                console.log(incomingData);
+                //Send the data to the clients in nodeSock
+                // socket.write(`We got your message (${m}). Thanks!\n`);
+                // Object.entries(nodeSock).forEach(([key, cs]) => {
+                //     cs.write(incomingData[9]);
+                    // cs.write(incomingData[1]);                    
+                // });
+                nodeSock.forEach(function (soc, client, nodeSock) {
+                   soc.write(incomingData[9]);
+                });
+            //}
         }
     });
     // Triggered when this client disconnects
     socket.on('end', () => {
         // Logging this message on the server
         console.log(`${clientName} disconnected.`);
-        //remove the sockets from the streamReq map{yet to be implemented}
-        // nodeSock.delete(clientName);
-        iotSock.delete(clientName);
+        //remove the sockets from the iotSock or nodeSock map{yet to be implemented}
+        if(iotSock(clientName)){
+            iotSock.delete(clientName);
+            console.log(iotSock.size);                
+        }else if(nodeSock(clientName)){
+            nodeSock.delete(clientName);
+            console.log(iotSock.size);
+        }
     });
 }
