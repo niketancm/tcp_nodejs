@@ -58,7 +58,7 @@ function onClientConnected(socket) {
     socket.write("101\n")
 
     //Capture the start time
-    var timeStart = performance.now();    
+    // var timeStart = performance.now();    
 
     // Triggered on data received by this client    
     socket.on('data', (data) => {
@@ -126,7 +126,7 @@ function onClientConnected(socket) {
     });
     
     //For capture time for performance evaluation
-    var timeEnd = performance.now();
+    // var timeEnd = performance.now();
     console.log("The Time taken is "+ (timeEnd - timeStart) + " milliseconds");
 
     // Triggered when this client disconnects
