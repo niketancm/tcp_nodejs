@@ -57,7 +57,10 @@ function onClientConnected(socket) {
     // Logging the message on the server
     socket.write("101\n")
 
-    // Triggered on data received by this client
+    //Capture the start time
+    var timeStart = performance.now();    
+
+    // Triggered on data received by this client    
     socket.on('data', (data) => {
         let clientName = `${socket.remoteAddress}:${socket.remotePort}`;
         // getting the string message and also trimming
@@ -121,6 +124,11 @@ function onClientConnected(socket) {
             //}
         }
     });
+    
+    //For capture time for performance evaluation
+    var timeEnd = performance.now();
+    console.log("The Time taken is "+ (timeEnd - timeStart) + " milliseconds");
+
     // Triggered when this client disconnects
     socket.on('end', () => {
         // Logging this message on the server
