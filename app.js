@@ -45,6 +45,7 @@ var nodeSock =  new Map();
 var iotId = "ttkId10";
 var streamId = "ttknode10";
 // var count = 0;
+var socket;
 
 let server = net.createServer(onClientConnected);
 server.listen(PORT, ADDRESS);
@@ -58,8 +59,10 @@ function onClientConnected(socket) {
 
     // Triggered on data received by this client
     socket.on('data', (data) => {
+        let clientName = `${socket.remoteAddress}:${socket.remotePort}`;
         // getting the string message and also trimming
         // new line characters [\r or \n]
+        console.log(iotSock.size);
         let m = data.toString().replace(/[\n\r]*$/, '');
         // split the message
         var incomingData = m.split(',');
@@ -78,7 +81,7 @@ function onClientConnected(socket) {
             if(!iotSock.has(clientName)){
                 //register the socket as a {key,value} pair, key: clientname and value: socket
                 // iotSock[clientName] = socket;
-                iotSock.set(socket);
+                iotSock.set(clientName, socket);
                 // Logging the message on the server
                 console.log(`SERVER: IOT ${clientName} connected.`);
                 // console.log(`SERVER: Sending 'send' to client to send the data`);

@@ -19,12 +19,12 @@ soc2 = {"nickname": "sandy", "age": 32};
 // newMap[name2] = soc2;
 newMap.set(name1, soc1);
 newMap.set(name2, soc2);
-newMap.forEach((object, name, newMap) => {
-    console.log(name);
-    console.log(object);
-})
+// newMap.forEach((object, name, newMap) => {
+//     console.log(name);
+//     console.log(object);
+// })
 // newM console.log(newMap.has(name1));
 // console.log(newMap.delete(name2));
-// console.log(newMap.has(name2));
-
+// console.log(!newMap.has(name2));
+console.log(newMap);
 
