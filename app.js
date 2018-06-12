@@ -52,7 +52,7 @@ function onClientConnected(socket) {
     // Giving a name to this client
     let clientName = `${socket.remoteAddress}:${socket.remotePort}`;
     // Logging the message on the server
-    socket.write("101\n")
+    // socket.write("101\n")
 
     // Triggered on data received by this client
     socket.on('data', (data) => {
@@ -76,8 +76,7 @@ function onClientConnected(socket) {
                 // Logging the message on the server
                 console.log(`SERVER: IOT ${clientName} connected.`);
                 console.log(`SERVER: Sending 'send' to client to send the data`);
-                socket.write("send"); //remove this
-
+                // socket.write("send"); //remove this
                 return;
             }else{//iot connections already there, insert data
                 const dataInsert = new Data;
