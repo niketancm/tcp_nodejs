@@ -71,7 +71,7 @@ function onClientConnected(socket) {
             // if(!nodeSock[clientName]){//new connection
             if(!nodeSock.has(clientName)){//new connection
                 //register the scoket as a key value pair, key: clientname and value: socket
-                console.log(`SERVER: CLIENT ${clientName} connected.`);
+                // console.log(`SERVER: CLIENT ${clientName} connected.`);
                 // nodeSock[clientName] = socket;
                 nodeSock.set(clientName, socket);
             }else{//connection already present
@@ -84,9 +84,9 @@ function onClientConnected(socket) {
                 // iotSock[clientName] = socket;
                 iotSock.set(clientName, socket);
                 // Logging the message on the server
-                console.log(`SERVER: IOT ${clientName} connected.`);
+                // console.log(`SERVER: IOT ${clientName} connected.`);
                 // console.log(`SERVER: Sending 'send' to client to send the data`);
-                console.log(iotSock.size);                
+                // console.log(iotSock.size);                
                 // return;
             }//else{//iot connections already there, insert data
                 const dataInsert = new Data;
@@ -108,7 +108,7 @@ function onClientConnected(socket) {
                       console.log("SERVER: Your data has been saved!");
                     }
                 });
-                console.log(incomingData);
+                // console.log(incomingData);
                 // socket.write(`We got your message (${m}). Thanks!\n`);
                 // Object.entries(nodeSock).forEach(([key, cs]) => {
                 //     cs.write(incomingData[9]);
