@@ -61,7 +61,7 @@ function onClientConnected(socket) {
 
     // Triggered on data received by this client    
     socket.on('data', (data) => {
-        let clientName = `${socket.remoteAddress}:${socket.remotePort}`;
+        // let clientName = `${socket.remoteAddress}:${socket.remotePort}`;
         // getting the string message and also trimming
         // new line characters [\r or \n]
         let m = data.toString().replace(/[\n\r]*$/, '');
@@ -128,11 +128,11 @@ function onClientConnected(socket) {
     socket.on('end', () => {
         // Logging this message on the server
         console.log(`${clientName} disconnected.`);
-        //remove the sockets from the iotSock or nodeSock map{yet to be implemented}
-        if(iotSock(clientName)){
+        //remove the sockets from the iotSock or nodeSock map
+        if(iotSock.has(clientName)){
             iotSock.delete(clientName);
             console.log(iotSock.size);                
-        }else if(nodeSock(clientName)){
+        }else if(nodeSock.has(clientName)){
             nodeSock.delete(clientName);
             console.log(iotSock.size);
         }
