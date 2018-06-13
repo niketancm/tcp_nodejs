@@ -136,5 +136,6 @@ function onClientConnected(socket) {
             nodeSock.delete(clientName);
             console.log(iotSock.size);
         }
+        console.log(incomingData);
     });
 }
