@@ -7,24 +7,19 @@
 // console.log(speratedArray.length);
 // // console.log(speratedArray);
 
-var newMap = new Map();
-
-name1 = "niketan";
-name2 = "sandesh";
-
-soc1 = {"nickname": "nikey", "age": 35};
-soc2 = {"nickname": "sandy", "age": 32};
-
-// newMap[name1] = soc1;
-// newMap[name2] = soc2;
-newMap.set(name1, soc1);
-newMap.set(name2, soc2);
-// newMap.forEach((object, name, newMap) => {
-//     console.log(name);
-//     console.log(object);
-// })
-// newM console.log(newMap.has(name1));
-// console.log(newMap.delete(name2));
-// console.log(!newMap.has(name2));
-console.log(newMap);
-
+// var persons = new Map();
+var persons = {};
+var name1 = "niketan";
+var name2 = "sandesh";
+// persons.set(name1,{"nickname": "nicky","age" : 35});
+// persons.set(name2, {"nickname": "sandy", "age": 30});
+persons[name1] = {"nickname": "nicky","age" : 35};
+persons[name2] = {"nickname": "sandy", "age": 30};
+// if(persons.delete(name1)){
+//     console.log("succeded")
+// }else{
+//     console.log("failed")    
+// }
+// console.log(typeof(persons));
+// console.log(persons.has('niketan'));
+// console.log(persons.remove(name1));
