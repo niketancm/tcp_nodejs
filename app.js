@@ -55,6 +55,7 @@ function onClientConnected(socket) {
 
     // Giving a name to this client
     let clientName = `${socket.remoteAddress}:${socket.remotePort}`;
+
     // Logging the message on the server
     // socket.write("101\n")
 
@@ -66,7 +67,6 @@ function onClientConnected(socket) {
         let clientName = `${socket.remoteAddress}:${socket.remotePort}`;
         // getting the string message and also trimming
         // new line characters [\r or \n]
-        // console.log(iotSock.size);
         let m = data.toString().replace(/[\n\r]*$/, '');
         // split the message
         var incomingData = m.split(',');
@@ -89,7 +89,6 @@ function onClientConnected(socket) {
                 // Logging the message on the server
                 console.log(`SERVER: IOT ${clientName} connected.`);
                 // console.log(`SERVER: Sending 'send' to client to send the data`);
-                // socket.write("send"); //remove this
                 console.log(iotSock.size);                
                 // return;
             }//else{//iot connections already there, insert data
