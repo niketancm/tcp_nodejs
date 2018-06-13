@@ -113,12 +113,12 @@ function onClientConnected(socket) {
                     }
                 });
                 console.log(incomingData);
-                //Send the data to the clients in nodeSock
                 // socket.write(`We got your message (${m}). Thanks!\n`);
                 // Object.entries(nodeSock).forEach(([key, cs]) => {
                 //     cs.write(incomingData[9]);
                     // cs.write(incomingData[1]);                    
                 // });
+                //Send the data to the clients in nodeSock
                 nodeSock.forEach(function (soc, client, nodeSock) {
                    soc.write(incomingData[9]);
                 });
