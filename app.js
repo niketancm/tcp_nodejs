@@ -4,7 +4,8 @@
 const mongoose = require('mongoose');
 const net = require('net');  // load the Node.js TCP library
 
-mongoose.connect('mongodb://localhost:27017/esya-test'); //connect to the database
+// mongoose.connect('mongodb://localhost:27017/esya-test'); //connect to the database
+mongoose.connect('mongodb://localhost:27017/esya-test1'); //connect to the database
 
 var db = mongoose.connection;
 
