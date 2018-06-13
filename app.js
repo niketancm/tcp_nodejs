@@ -122,7 +122,7 @@ function onClientConnected(socket) {
         }
     });
     
-    // console.log("The Time taken is "+ (timeEnd - timeStart) + " milliseconds");
+    // console.log("The Time taken is "+ (timeEnd - timeS   tart) + " milliseconds");
 
     // Triggered when this client disconnects
     socket.on('end', () => {
