@@ -45,7 +45,6 @@ var iotSock = new Map();
 var nodeSock =  new Map();
 var iotId = "ttkId10";
 var streamId = "ttknode10";
-// var count = 0;
 var socket;
 
 let server = net.createServer(onClientConnected);
@@ -61,7 +60,6 @@ function onClientConnected(socket) {
 
     // Triggered on data received by this client    
     socket.on('data', (data) => {
-        // let clientName = `${socket.remoteAddress}:${socket.remotePort}`;
         // getting the string message and also trimming
         // new line characters [\r or \n]
         let m = data.toString().replace(/[\n\r]*$/, '');
@@ -71,22 +69,17 @@ function onClientConnected(socket) {
             // if(!nodeSock[clientName]){//new connection
             if(!nodeSock.has(clientName)){//new connection
                 //register the scoket as a key value pair, key: clientname and value: socket
-                // console.log(`SERVER: CLIENT ${clientName} connected.`);
-                // nodeSock[clientName] = socket;
                 nodeSock.set(clientName, socket);
             }else{//connection already present
                 return;
             }
         }else{//not stream id, these are iot connections
-            // if(!iotSock[clientName]){//new iot connectons
-            if(!iotSock.has(clientName)){
+            if(!iotSock.has(clientName)){//new iot connectons
                 //register the socket as a {key,value} pair, key: clientname and value: socket
-                // iotSock[clientName] = socket;
                 iotSock.set(clientName, socket);
                 // Logging the message on the server
                 // console.log(`SERVER: IOT ${clientName} connected.`);
                 // console.log(`SERVER: Sending 'send' to client to send the data`);
-                // console.log(iotSock.size);                
                 // return;
             }//else{//iot connections already there, insert data
                 const dataInsert = new Data;
@@ -121,8 +114,6 @@ function onClientConnected(socket) {
             //}
         }
     });
-    
-    // console.log("The Time taken is "+ (timeEnd - timeS   tart) + " milliseconds");
 
     // Triggered when this client disconnects
     socket.on('end', () => {
