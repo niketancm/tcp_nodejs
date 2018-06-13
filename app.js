@@ -56,7 +56,7 @@ function onClientConnected(socket) {
     // Giving a name to this client
     let clientName = `${socket.remoteAddress}:${socket.remotePort}`;
     // Logging the message on the server
-    socket.write("101\n")
+    // socket.write("101\n")
 
     //Capture the start time
     // var timeStart = performance.now();    
