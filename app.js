@@ -136,6 +136,13 @@ function onClientConnected(socket) {
             socket.destroy();
             console.log(iotSock.size);
         }
+        console.log("length of DATA OBJECT:" + data.toString().length);        
+        console.log(data.toString().length);
+        console.log("THIS IS DATA IN var data :");        
         console.log(data.toString());
+        console.log("length of DATA QUEUE:" + dataQueue.length);
+        console.log(dataQueue.length);
+        console.log("THIS IS data IN var dataQueue :");        
+        console.log(dataQueue);
     });
 }
