@@ -119,7 +119,7 @@ function onClientConnected(socket) {
                    soc.write(incomingData[9]);
                 });
                 // console.log(data.toString());
-                console.log("This is the elements in dataQueue" + dataQueue);
+                console.log("This is the elements in dataQueue:" + dataQueue);
             }
         }
     });
