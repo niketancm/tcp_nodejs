@@ -47,8 +47,8 @@ var iotId = "ttkId10";
 var streamId = "ttknode10";
 var socket;
 var dataQueue = [];
-var incomingData = [];
-
+var incomingData;
+var data;
 let server = net.createServer(onClientConnected);
 server.listen(PORT, ADDRESS);
 
@@ -65,11 +65,12 @@ function onClientConnected(socket) {
         // getting the string message and also trimming
         // new line characters [\r or \n] and push to dataQueue
         // let m = data.toString().replace(/[\n\r]*$/, '');
+        // console.log(data);
         dataQueue.push(data.toString().replace(/[\n\r]*$/, ''));
-        //remove the first element from the dataQueue
-        let m = dataQueue.shift();
+        //remove the first element from the dataQueue and split the message
+        incomingData = (dataQueue.shift()).split(',');
         // split the message
-        incomingData = m.split(',');
+        // incomingData = m.split(',');
         if(incomingData[0] === streamId){ //this is a req conn from the nodejs/express
             // if(!nodeSock[clientName]){//new connection
             if(!nodeSock.has(clientName)){//new connection
@@ -103,9 +104,9 @@ function onClientConnected(socket) {
                     if(error) {
                       //   console.error(error);
                     console.log('Send the data in correct format');
-                    }else{
-                      console.log("SERVER: Your data has been saved!");
-                    }
+                    }//else{
+                    //   console.log("SERVER: Your data has been saved!");
+                    // }
                 });
                 // console.log(incomingData);
                 // socket.write(`We got your message (${m}). Thanks!\n`);
@@ -134,6 +135,6 @@ function onClientConnected(socket) {
             socket.destroy();
             console.log(iotSock.size);
         }
-        console.log(dataQueue);
+        console.log(data);
     });
 }
