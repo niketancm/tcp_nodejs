@@ -127,9 +127,11 @@ function onClientConnected(socket) {
         //remove the sockets from the iotSock or nodeSock map
         if(iotSock.has(clientName)){
             iotSock.delete(clientName);
+            socket.destroy();
             console.log(iotSock.size);                
         }else if(nodeSock.has(clientName)){
             nodeSock.delete(clientName);
+            socket.destroy();
             console.log(iotSock.size);
         }
         console.log(dataQueue);
