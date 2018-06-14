@@ -66,10 +66,12 @@ function onClientConnected(socket) {
         // new line characters [\r or \n] and push to dataQueue
         // let m = data.toString().replace(/[\n\r]*$/, '');
         // console.log(data);
-        dataQueue = data.toString().replace(/[\n\r]*$/, '');
-        console.log("This is the DATAQUEUE in 'SOCKET.ON'" + dataQueue);        
+        // dataQueue = data.toString().replace(/[\n\r]*$/, '');
+        dataQueue = data.toString();
+        console.log(dataQueue);
+        // console.log("This is the DATAQUEUE in 'SOCKET.ON'" + dataQueue);        
         //remove the first element from the dataQueue and split the message
-        incomingData = dataQueue.split(',');
+        incomingData = dataQueue.split('\n\r');
         // split the message
         // incomingData = m.split(',');
         if(incomingData[0] === streamId){ //this is a req conn from the nodejs/express
@@ -120,7 +122,7 @@ function onClientConnected(socket) {
                    soc.write(incomingData[9]);
                 });
                 // console.log(data.toString());
-                console.log("This is the elements in dataQueue:" + dataQueue);
+                // console.log("This is the elements in dataQueue:" + dataQueue);
             }
         }
     });
