@@ -118,7 +118,8 @@ function onClientConnected(socket) {
                 nodeSock.forEach(function (soc, client, nodeSock) {
                    soc.write(incomingData[9]);
                 });
-                console.log(data.toString());
+                // console.log(data.toString());
+                console.log("This is the elements in dataQueue" + dataQueue);
             }
         }
     });
@@ -130,11 +131,11 @@ function onClientConnected(socket) {
         if(iotSock.has(clientName)){
             iotSock.delete(clientName);
             socket.destroy();
-            console.log(iotSock.size);                
+            // console.log(iotSock.size);                
         }else if(nodeSock.has(clientName)){
             nodeSock.delete(clientName);
             socket.destroy();
-            console.log(iotSock.size);
+            // console.log(iotSock.size);
         }
         console.log("length of DATA OBJECT:" + data.toString().length);        
         console.log(data.toString().length);
