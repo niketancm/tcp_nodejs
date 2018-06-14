@@ -25,7 +25,8 @@ var mess = 'ttkId10,tn,hosur,p1,l1,m1,op1,d1,temp,'
             var  i = 1;
             console.log("CLIENT: got 'send' from server");
             var interval = setInterval(function () {
-                if(i >= (tempData.length)){
+                if(i >= (5000)){
+                // if(i >= (tempData.length)){
                     clearInterval(interval);
                 }
                 // sendData = mess + tempData[i];
