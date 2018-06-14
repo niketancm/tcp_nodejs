@@ -1,5 +1,5 @@
 var speratedArray = [];
-var message = "22/05/16, India, Bangalore, ttk_magadi, line1, d316, shankar, I0019, temperature, 23.04,";
+var message = "ttkId10, India, Bangalore, ttk_magadi, line1, d316, shankar, I0019, temperature, 23.04ttkId10,India, Bangalore, ttk_magadi, line1, d316, shankar, I0019, temperature, 23.04";
 speratedArray = message.split(',');
 // // console.log(speratedArray[9]);
 // // console.log(parseFloat(speratedArray[9]));
@@ -24,9 +24,4 @@ speratedArray = message.split(',');
 // console.log(typeof(persons));
 // console.log(persons.has('niketan'));
 // console.log(persons.remove(name1));
-
-speratedArray.push("ending");
-console.log(speratedArray);
-var element = speratedArray.shift();
-console.log(element);
-console.log(speratedArray);
+console.log(message.split('ttkId10'));
