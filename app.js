@@ -136,6 +136,6 @@ function onClientConnected(socket) {
             socket.destroy();
             console.log(iotSock.size);
         }
-        console.log(data);
+        console.log(data.toString());
     });
 }
