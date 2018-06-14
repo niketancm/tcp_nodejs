@@ -118,7 +118,7 @@ function onClientConnected(socket) {
                 nodeSock.forEach(function (soc, client, nodeSock) {
                    soc.write(incomingData[9]);
                 });
-                console.log(data);
+                console.log(data.toString());
             }
         }
     });
