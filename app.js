@@ -46,6 +46,8 @@ var nodeSock =  new Map();
 var iotId = "ttkId10";
 var streamId = "ttknode10";
 var socket;
+var dataQueue = [];
+var incomingData = [];
 
 let server = net.createServer(onClientConnected);
 server.listen(PORT, ADDRESS);
@@ -56,15 +58,18 @@ function onClientConnected(socket) {
     let clientName = `${socket.remoteAddress}:${socket.remotePort}`;
 
     // Logging the message on the server
-    // socket.write("101\n")
+    socket.write("101\n")
 
     // Triggered on data received by this client    
     socket.on('data', (data) => {
         // getting the string message and also trimming
-        // new line characters [\r or \n]
-        let m = data.toString().replace(/[\n\r]*$/, '');
+        // new line characters [\r or \n] and push to dataQueue
+        // let m = data.toString().replace(/[\n\r]*$/, '');
+        dataQueue.push(data.toString().replace(/[\n\r]*$/, ''));
+        //remove the first element from the dataQueue
+        let m = dataQueue.shift();
         // split the message
-        var incomingData = m.split(',');
+        incomingData = m.split(',');
         if(incomingData[0] === streamId){ //this is a req conn from the nodejs/express
             // if(!nodeSock[clientName]){//new connection
             if(!nodeSock.has(clientName)){//new connection
@@ -78,10 +83,11 @@ function onClientConnected(socket) {
                 //register the socket as a {key,value} pair, key: clientname and value: socket
                 iotSock.set(clientName, socket);
                 // Logging the message on the server
-                // console.log(`SERVER: IOT ${clientName} connected.`);
-                // console.log(`SERVER: Sending 'send' to client to send the data`);
-                // return;
-            }//else{//iot connections already there, insert data
+                console.log(`SERVER: IOT ${clientName} connected.`);
+                console.log(`SERVER: Sending 'send' to client to send the data`);
+                socket.write("send\n");
+                return;
+            }else{//iot connections already there, insert data
                 const dataInsert = new Data;
                 //save the incoming data to the mongoose model to be inserted
                 dataInsert.REGION = incomingData[1];
@@ -111,10 +117,9 @@ function onClientConnected(socket) {
                 nodeSock.forEach(function (soc, client, nodeSock) {
                    soc.write(incomingData[9]);
                 });
-            //}
+            }
         }
     });
-
     // Triggered when this client disconnects
     socket.on('end', () => {
         // Logging this message on the server
