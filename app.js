@@ -47,7 +47,7 @@ var iotId = "ttkId10";
 var streamId = "ttknode10";
 var socket;
 var dataQueue = [];
-var incomingData;
+var incomingData = [];
 var data;
 let server = net.createServer(onClientConnected);
 server.listen(PORT, ADDRESS);
@@ -64,65 +64,68 @@ function onClientConnected(socket) {
     socket.on('data', (data) => {
         // getting the string message and also trimming
         // new line characters [\r or \n] and push to dataQueue
-        // let m = data.toString().replace(/[\n\r]*$/, '');
+        let m = data.toString().replace(/[\n\r]*$/, '');
         // console.log(data);
         // dataQueue = data.toString().replace(/[\n\r]*$/, '');
-        dataQueue = data.toString();
-        console.log(dataQueue);
+        // dataQueue = data.toString();
+        // console.log(dataQueue);
         // console.log("This is the DATAQUEUE in 'SOCKET.ON'" + dataQueue);        
         //remove the first element from the dataQueue and split the message
-        incomingData = dataQueue.split('\n\r');
+        // incomingData = dataQueue.split('##');
         // split the message
-        // incomingData = m.split(',');
-        if(incomingData[0] === streamId){ //this is a req conn from the nodejs/express
-            // if(!nodeSock[clientName]){//new connection
-            if(!nodeSock.has(clientName)){//new connection
-                //register the scoket as a key value pair, key: clientname and value: socket
-                nodeSock.set(clientName, socket);
-            }else{//connection already present
-                return;
-            }
-        }else{//not stream id, these are iot connections
-            if(!iotSock.has(clientName)){//new iot connectons
-                //register the socket as a {key,value} pair, key: clientname and value: socket
-                iotSock.set(clientName, socket);
-                // Logging the message on the server
-                console.log(`SERVER: IOT ${clientName} connected.`);
-                console.log(`SERVER: Sending 'send' to client to send the data`);
-                socket.write("send\n");
-                return;
-            }else{//iot connections already there, insert data
-                const dataInsert = new Data;
-                //save the incoming data to the mongoose model to be inserted
-                dataInsert.REGION = incomingData[1];
-                dataInsert.LOCATION = incomingData[2];
-                dataInsert.PLANT = incomingData[3];
-                dataInsert.LINE = incomingData[4];
-                dataInsert.MODEL= incomingData[5];
-                dataInsert.OPERATOR = incomingData[6];
-                dataInsert.DEVICEID = incomingData[7];
-                dataInsert.PARAMETER = incomingData[8];
-                dataInsert.DATA = parseFloat(incomingData[9]);
-                dataInsert.save(function(error){
-                    if(error) {
-                      //   console.error(error);
-                    console.log('Send the data in correct format');
-                    }//else{
-                    //   console.log("SERVER: Your data has been saved!");
-                    // }
-                });
-                // console.log(incomingData);
-                // socket.write(`We got your message (${m}). Thanks!\n`);
-                // Object.entries(nodeSock).forEach(([key, cs]) => {
-                //     cs.write(incomingData[9]);
-                    // cs.write(incomingData[1]);                    
-                // });
-                //Send the data to the clients in nodeSock
-                nodeSock.forEach(function (soc, client, nodeSock) {
-                   soc.write(incomingData[9]);
-                });
-                // console.log(data.toString());
-                // console.log("This is the elements in dataQueue:" + dataQueue);
+        incomingData = m.split('##');
+        for( var i = 0; i < (incomingData.length - 1); i++){
+            var insert = incomingData[i].split(',');
+            if(insert[0] === streamId){ //this is a req conn from the nodejs/express
+                // if(!nodeSock[clientName]){//new connection
+                if(!nodeSock.has(clientName)){//new connection
+                    //register the scoket as a key value pair, key: clientname and value: socket
+                    nodeSock.set(clientName, socket);
+                }else{//connection already present
+                    return;
+                }
+            }else{//not stream id, these are iot connections
+                if(!iotSock.has(clientName)){//new iot connectons
+                    //register the socket as a {key,value} pair, key: clientname and value: socket
+                    iotSock.set(clientName, socket);
+                    // Logging the message on the server
+                    // console.log(`SERVER: IOT ${clientName} connected.`);
+                    // console.log(`SERVER: Sending 'send' to client to send the data`);
+                    socket.write("send\n");
+                    return;
+                }else{//iot connections already there, insert data
+                    const dataInsert = new Data;
+                    //save the incoming data to the mongoose model to be inserted
+                    dataInsert.REGION = insert[1];
+                    dataInsert.LOCATION = insert[2];
+                    dataInsert.PLANT = insert[3];
+                    dataInsert.LINE = insert[4];
+                    dataInsert.MODEL= insert[5];
+                    dataInsert.OPERATOR = insert[6];
+                    dataInsert.DEVICEID = insert[7];
+                    dataInsert.PARAMETER = insert[8];
+                    dataInsert.DATA = parseFloat(insert[9]);
+                    dataInsert.save(function(error){
+                        if(error) {
+                        //   console.error(error);
+                        console.log('Send the data in correct format');
+                        }//else{
+                        //   console.log("SERVER: Your data has been saved!");
+                        // }
+                    });
+                    // console.log(insert);
+                    // socket.write(`We got your message (${m}). Thanks!\n`);
+                    // Object.entries(nodeSock).forEach(([key, cs]) => {
+                    //     cs.write(insert[9]);
+                        // cs.write(insert[1]);                    
+                    // });
+                    //Send the data to the clients in nodeSock
+                    nodeSock.forEach(function (soc, client, nodeSock) {
+                    soc.write(insert[9]);
+                    });
+                    // console.log(data.toString());
+                    // console.log("This is the elements in dataQueue:" + dataQueue);
+                }
             }
         }
     });
