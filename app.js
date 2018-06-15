@@ -57,7 +57,7 @@ function onClientConnected(socket) {
     // Giving a name to this client
     let clientName = `${socket.remoteAddress}:${socket.remotePort}`;
     // Logging the message on the server
-    socket.write("101\n")
+    // socket.write("101\n")
     // Triggered on data received by this client    
     socket.on('data', (data) => {
         // getting the string message and also trimming
@@ -85,10 +85,10 @@ function onClientConnected(socket) {
                 if(!iotSock.has(clientName)){//new iot connectons
                     iotSock.set(clientName, socket);
                     // Logging the message on the server
-                    console.log(`SERVER: IOT ${clientName} connected.`);
+                    // console.log(`SERVER: IOT ${clientName} connected.`);
                     // console.log(`SERVER: Sending 'send' to client to send the data`);
-                    socket.write("send\n");
-                    return;
+                    // socket.write("send\n");
+                    // return;
                 }else{//iot connections already there, insert data
                     const dataInsert = new Data;
                     //save the incoming data to the mongoose model to be inserted
