@@ -60,10 +60,11 @@ function onClientConnected(socket) {
     // socket.write("101\n")
     // Triggered on data received by this client    
     socket.on('data', (data) => {
-        console.log(data.toString());
+        let temp = data.toString();
+        console.log(temp);
         // getting the string message and also trimming
         // new line characters [\r or \n] and push to dataQueue
-        let m = data.toString().replace(/[\n\r]*$/, '');
+        let m = temp.replace(/[\n\r]*$/, '');
         // console.log(data);
         // dataQueue = data.toString().replace(/[\n\r]*$/, '');
         // dataQueue = data.toString();
