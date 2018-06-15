@@ -105,9 +105,9 @@ function onClientConnected(socket) {
                         if(error) {
                         //   console.error(error);
                         console.log('Send the data in correct format');
-                        }//else{
-                        //   console.log("SERVER: Your data has been saved!");
-                        // }
+                        }else{
+                          console.log("SERVER: Your data has been saved!");
+                        }
                     });
                     //Send the data to the clients in nodeSock
                     nodeSock.forEach(function (soc, client, nodeSock) {
