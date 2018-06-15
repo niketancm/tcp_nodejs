@@ -87,8 +87,8 @@ function onClientConnected(socket) {
                 //register the socket as a {key,value} pair, key: clientname and value: socket
                 iotSock.set(clientName, socket);
                 // Logging the message on the server
-                console.log(`SERVER: IOT ${clientName} connected.`);
-                console.log(`SERVER: Sending 'send' to client to send the data`);
+                // console.log(`SERVER: IOT ${clientName} connected.`);
+                // console.log(`SERVER: Sending 'send' to client to send the data`);
                 socket.write("send\n");
                 return;
             }else{//iot connections already there, insert data
