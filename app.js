@@ -89,11 +89,13 @@ function onClientConnected(socket) {
                     //register the socket as a {key,value} pair, key: clientname and value: socket
                     iotSock.set(clientName, socket);
                     // Logging the message on the server
-                    // console.log(`SERVER: IOT ${clientName} connected.`);
+                    console.log(`SERVER: IOT ${clientName} connected.`);
                     // console.log(`SERVER: Sending 'send' to client to send the data`);
                     socket.write("send\n");
                     return;
                 }else{//iot connections already there, insert data
+                    // socket.write("got send: waiting for data\n");
+                    // console.log("got send: waiting for data\n");                    
                     const dataInsert = new Data;
                     //save the incoming data to the mongoose model to be inserted
                     dataInsert.REGION = insert[1];
@@ -143,8 +145,8 @@ function onClientConnected(socket) {
             socket.destroy();
             // console.log(iotSock.size);
         }
-        console.log("length of DATA OBJECT:" + data.toString().length);        
-        console.log(data.toString().length);
+        // console.log("length of DATA OBJECT:" + data.toString().length);        
+        // console.log(data.toString().length);
         console.log("THIS IS DATA IN var data :");        
         console.log(data.toString());
         console.log("length of DATA QUEUE:" + dataQueue.length);

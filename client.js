@@ -21,7 +21,7 @@ var mess = 'ttkId10,tn,hosur,p1,l1,m1,op1,d1,temp,'
         if(incomingData === "101"){
             // console.log(incomingData[0]);
             console.log("CLIENT: supplying the IOT ID: ttkId10");
-            client.write("ttkId10");
+            client.write("ttkId10##");
         }else if(incomingData === "send"){
             var  i = 1;
             console.log("CLIENT: got 'send' from server");
@@ -31,7 +31,7 @@ var mess = 'ttkId10,tn,hosur,p1,l1,m1,op1,d1,temp,'
                     clearInterval(interval);
                 }
                 // sendData = mess + tempData[i];
-                sendData = mess + i ;//+ "##";
+                sendData = mess + i + "##";
                 console.log(sendData);
                 client.write(sendData);
                i++;    
