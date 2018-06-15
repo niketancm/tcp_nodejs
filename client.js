@@ -42,4 +42,5 @@ var mess = 'ttkId10,tn,hosur,p1,l1,m1,op1,d1,temp,'
 // Add a 'close' event handler for the client socket
     client.on('close', function() {
     console.log('Connection closed');
+    clearInterval(interval);
     });
