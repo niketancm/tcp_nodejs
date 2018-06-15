@@ -17,14 +17,14 @@ var mess = 'ttkId10,tn,hosur,p1,l1,m1,op1,d1,temp,'
 // data is what the server sent to this socket
     client.on('data', function(data) {
         let incomingData = data.toString().replace(/[\n\r]*$/, '');
-        console.log("data received:" + incomingData);
-        if(incomingData === "101"){
-            // console.log(incomingData[0]);
-            console.log("CLIENT: supplying the IOT ID: ttkId10");
-            client.write("ttkId10##");
-        }else if(incomingData === "send"){
+        // console.log("data received:" + incomingData);
+        // if(incomingData === "101"){
+        //     // console.log(incomingData[0]);
+        //     console.log("CLIENT: supplying the IOT ID: ttkId10");
+        //     client.write("ttkId10##");
+        // }else if(incomingData === "send"){
             var  i = 1;
-            console.log("CLIENT: got 'send' from server");
+            // console.log("CLIENT: got 'send' from server");
             var interval = setInterval(function () {
                 if(i >= (5000)){
                 // if(i >= (tempData.length)){
@@ -36,7 +36,7 @@ var mess = 'ttkId10,tn,hosur,p1,l1,m1,op1,d1,temp,'
                 client.write(sendData);
                i++;    
             }, 800);
-        }
+        // }
     });
 
 // Add a 'close' event handler for the client socket
