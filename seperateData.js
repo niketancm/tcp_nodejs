@@ -35,7 +35,7 @@ console.log(" length: " + spliMsg.length );
 for( var i = 0; i < (spliMsg.length - 1); i++){    
         // console.log(spliMsg[i] +" length: " + spliMsg.length + " " + i);        
         // console.log(spliMsg[i]);                
-        finalMsg.push(spliMsg[i])
+        finalMsg = spliMsg[i];
 }
 console.log("Final message: \n");
 console.log(finalMsg + "LEngth is: " + finalMsg.length);
