@@ -60,6 +60,7 @@ function onClientConnected(socket) {
     // socket.write("101\n")
     // Triggered on data received by this client    
     socket.on('data', (data) => {
+        console.log(data.toString());
         // getting the string message and also trimming
         // new line characters [\r or \n] and push to dataQueue
         let m = data.toString().replace(/[\n\r]*$/, '');
@@ -126,11 +127,11 @@ function onClientConnected(socket) {
         //remove the sockets from the iotSock or nodeSock map
         if(iotSock.has(clientName)){
             iotSock.delete(clientName);
-            socket.destroy();
+            // socket.destroy();
             // console.log(iotSock.size);                
         }else if(nodeSock.has(clientName)){
             nodeSock.delete(clientName);
-            socket.destroy();
+            // socket.destroy();
             // console.log(iotSock.size);
         }
         // console.log("length of DATA OBJECT:" + data.toString().length);        
