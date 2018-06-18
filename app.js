@@ -5,13 +5,13 @@
 const mongodb = require('mongodb').MongoClient; //load the mongodb native driver
 const net = require('net');  // load the Node.js TCP library
 
-const URL = 'mongodb://localhost:27017/esya-test1'
+const URL = 'mongodb://localhost:27017/'
 // mongoose.connect('mongodb://localhost:27017/esya-test'); //connect to the database
 // mongoose.connect('mongodb://localhost:27017/esya-test1'); //connect to the database
 
 const PORT = 5000;
-const ADDRESS = '0.0.0.0'; //to listen to all incoming data
-// const ADDRESS = '127.0.0.1'; //to listen to all localhost
+// const ADDRESS = '0.0.0.0'; //to listen to all incoming data
+const ADDRESS = '127.0.0.1'; //to listen to all localhost
 
 // var iotSockets = {};
 // var streamReq = {};
@@ -31,7 +31,7 @@ function onClientConnected(socket) {
     // Giving a name to this client
     let clientName = `${socket.remoteAddress}:${socket.remotePort}`;
     // Logging the message on the server
-    // socket.write("101\n")
+    socket.write("101\n")
     // Triggered on data received by this client    
     socket.on('data', (data) => {
         let temp = data.toString();
@@ -63,16 +63,32 @@ function onClientConnected(socket) {
                     // Logging the message on the server
                     // console.log(`SERVER: IOT ${clientName} connected.`);
                     // console.log(`SERVER: Sending 'send' to client to send the data`);
-                    // socket.write("send\n");
-                    // return;
+                    socket.write("send\n");
+                    return;
                 }else{//iot connections already there, insert data
                     //save the incoming data to the mongoose model to be inserted
-                    MongoClient.connect(URL, function(err, db){
+                    mongodb.connect(URL, function(err, db){
                         if(err) throw err;
-                        dbo = db.db("esya-test");
+                        var dbo = db.db("esya-test");
                         var insertData = {
-                            
-                        }
+                            region: insert[1],
+                            location: insert[2],
+                            plant: insert[3],
+                            line: insert[4],
+                            model: insert[5],
+                            operator: insert[6],
+                            deviceId: insert[7],
+                            parameter: insert[8],
+                            data:insert[9]
+                        };
+                        dbo.collection("ttk").insertOne(insertData, function(err, res){
+                            if(err){
+                                console.log("Could not be saved\n" + err);
+                            }else{
+                                console.log("Data saved\n");
+                            }
+                            db.close();
+                        });
                     });
                     //Send the data to the clients in nodeSock
                     nodeSock.forEach(function (soc, client, nodeSock) {

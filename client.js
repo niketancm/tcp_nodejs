@@ -1,7 +1,7 @@
 const net = require('net');
 
-// const HOST = '127.0.0.1';
-const HOST = 'ec2-184-72-73-164.compute-1.amazonaws.com';
+const HOST = '127.0.0.1';
+// const HOST = 'ec2-184-72-73-164.compute-1.amazonaws.com';
 const PORT = 5000;
 var mess = 'ttkId10,tn,hosur,p1,l1,m1,op1,d1,temp,'
 // var tempData = [23.147,23.117,23.105,23.096,23.123,23.124,23.118,23.098,23.151,23.116,23.153,23.154,23.096,
@@ -42,5 +42,5 @@ var mess = 'ttkId10,tn,hosur,p1,l1,m1,op1,d1,temp,'
 // Add a 'close' event handler for the client socket
     client.on('close', function() {
     console.log('Connection closed');
-    clearInterval(interval);
+    // clearInterval(interval);
     });
