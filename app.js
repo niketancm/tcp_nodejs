@@ -5,42 +5,21 @@
 const mongodb = require('mongodb').MongoClient; //load the mongodb native driver
 const net = require('net');  // load the Node.js TCP library
 
-const URL = 'mongodb://localhost:27017/esya-test'
+const URL = 'mongodb://localhost:27017/esya-test1'
 // mongoose.connect('mongodb://localhost:27017/esya-test'); //connect to the database
 // mongoose.connect('mongodb://localhost:27017/esya-test1'); //connect to the database
 
-//for mongodb native driver
-// MongoClient.connect(URL, function(err, db){
-//     console.log()
-// });
+// var db = mongoose.connection;
 
-var db = mongoose.connection;
-
-//check the connection to mongodb
-db.on('error', function (err) {
-    console.log('connection error', err);
-    });
+// //check the connection to mongodb
+// db.on('error', function (err) {
+//     console.log('connection error', err);
+//     });
     
-    db.once('open', function () {
-    console.log('connected to MONGO!.');
-    });       
+//     db.once('open', function () {
+//     console.log('connected to MONGO!.');
+//     });       
 
-// //define a schema
-// var Schema = mongoose.Schema;
-// var dataSchema = new Schema ({
-//     // DATETIME: Date,
-//     REGION: String,
-//     LOCATION: String,
-//     PLANT: String,
-//     LINE: String,
-//     MODEL: String,
-//     OPERATOR: String,
-//     DEVICEID: String,
-//     PARAMETER: String,
-//     DATA: Number
-// });
-//  //define a model dataModel
-// var Data = mongoose.model('dataModel',dataSchema);
 
 const PORT = 5000;
 const ADDRESS = '0.0.0.0'; //to listen to all incoming data
@@ -99,25 +78,8 @@ function onClientConnected(socket) {
                     // socket.write("send\n");
                     // return;
                 }else{//iot connections already there, insert data
-                    // const dataInsert = new Data;
                     //save the incoming data to the mongoose model to be inserted
-                    dataInsert.REGION = insert[1];
-                    dataInsert.LOCATION = insert[2];
-                    dataInsert.PLANT = insert[3];
-                    dataInsert.LINE = insert[4];
-                    dataInsert.MODEL= insert[5];
-                    dataInsert.OPERATOR = insert[6];
-                    dataInsert.DEVICEID = insert[7];
-                    dataInsert.PARAMETER = insert[8];
-                    dataInsert.DATA = parseFloat(insert[9]);
-                    dataInsert.save(function(error){
-                        if(error) {
-                        //   console.error(error);
-                        console.log('Send the data in correct format');
-                        }//else{
-                        //   console.log("SERVER: Your data has been saved! " + insert[9]);
-                        // }
-                    });
+
                     //Send the data to the clients in nodeSock
                     nodeSock.forEach(function (soc, client, nodeSock) {
                     soc.write(insert[9]);
