@@ -67,20 +67,19 @@ function onClientConnected(socket) {
                     return;
                 }else{//iot connections already there, insert data
                     //save the incoming data to the mongoose model to be inserted
+                    var insertData = {
+                        deviceId: insert[1],
+                        line: insert[2],
+                        unitNo: insert[3],
+                        operation: insert[4],
+                    };
                     mongodb.connect(URL, function(err, db){
                         if(err) throw err;
                         var dbo = db.db("esya-test");
-                        var insertData = {
-                            region: insert[1],
-                            location: insert[2],
-                            plant: insert[3],
-                            line: insert[4],
-                            model: insert[5],
-                            operator: insert[6],
-                            deviceId: insert[7],
-                            parameter: insert[8],
-                            data:insert[9]
-                        };
+                        for(var i = 5; i < insert.length; i++){
+                            let para = insert[i].split('=');
+                            insertData[para[0]] = parseFloat(para[1]);
+                        }
                         dbo.collection("ttk").insertOne(insertData, function(err, res){
                             if(err){
                                 console.log("Could not be saved\n" + err);
