@@ -31,7 +31,7 @@ function onClientConnected(socket) {
     // Giving a name to this client
     let clientName = `${socket.remoteAddress}:${socket.remotePort}`;
     // Logging the message on the server
-    socket.write("101\n")
+    // socket.write("101\n")
     // Triggered on data received by this client    
     socket.on('data', (data) => {
         let temp = data.toString();
@@ -63,20 +63,21 @@ function onClientConnected(socket) {
                     // Logging the message on the server
                     // console.log(`SERVER: IOT ${clientName} connected.`);
                     // console.log(`SERVER: Sending 'send' to client to send the data`);
-                    socket.write("send\n");
+                    // socket.write("send\n");
                     return;
                 }else{//iot connections already there, insert data
                     //save the incoming data to the mongoose model to be inserted
                     var insertData = {
                         deviceId: insert[1],
-                        line: insert[2],
-                        unitNo: insert[3],
-                        operation: insert[4],
+                        unit: insert[2],
+                        line: insert[3],
+                        modelName: insert[4],
+                        operation: insert[5],
                     };
                     mongodb.connect(URL, function(err, db){
                         if(err) throw err;
                         var dbo = db.db("esya-test");
-                        for(var i = 5; i < insert.length; i++){
+                        for(var i = 6; i < insert.length; i++){
                             let para = insert[i].split('=');
                             insertData[para[0]] = parseFloat(para[1]);
                         }
