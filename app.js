@@ -1,11 +1,18 @@
 #!/usr/bin/env node
 'use strict';
 
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
+const mongodb = require('mongodb').MongoClient; //load the mongodb native driver
 const net = require('net');  // load the Node.js TCP library
 
+const URL = 'mongodb://localhost:27017/esya-test'
 // mongoose.connect('mongodb://localhost:27017/esya-test'); //connect to the database
-mongoose.connect('mongodb://localhost:27017/esya-test1'); //connect to the database
+// mongoose.connect('mongodb://localhost:27017/esya-test1'); //connect to the database
+
+//for mongodb native driver
+// MongoClient.connect(URL, function(err, db){
+//     console.log()
+// });
 
 var db = mongoose.connection;
 
@@ -18,22 +25,22 @@ db.on('error', function (err) {
     console.log('connected to MONGO!.');
     });       
 
-//define a schema
-var Schema = mongoose.Schema;
-var dataSchema = new Schema ({
-    // DATETIME: Date,
-    REGION: String,
-    LOCATION: String,
-    PLANT: String,
-    LINE: String,
-    MODEL: String,
-    OPERATOR: String,
-    DEVICEID: String,
-    PARAMETER: String,
-    DATA: Number
-});
- //define a model dataModel
-var Data = mongoose.model('dataModel',dataSchema);
+// //define a schema
+// var Schema = mongoose.Schema;
+// var dataSchema = new Schema ({
+//     // DATETIME: Date,
+//     REGION: String,
+//     LOCATION: String,
+//     PLANT: String,
+//     LINE: String,
+//     MODEL: String,
+//     OPERATOR: String,
+//     DEVICEID: String,
+//     PARAMETER: String,
+//     DATA: Number
+// });
+//  //define a model dataModel
+// var Data = mongoose.model('dataModel',dataSchema);
 
 const PORT = 5000;
 const ADDRESS = '0.0.0.0'; //to listen to all incoming data
@@ -92,7 +99,7 @@ function onClientConnected(socket) {
                     // socket.write("send\n");
                     // return;
                 }else{//iot connections already there, insert data
-                    const dataInsert = new Data;
+                    // const dataInsert = new Data;
                     //save the incoming data to the mongoose model to be inserted
                     dataInsert.REGION = insert[1];
                     dataInsert.LOCATION = insert[2];
