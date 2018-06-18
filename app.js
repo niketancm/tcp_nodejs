@@ -10,8 +10,8 @@ const URL = 'mongodb://localhost:27017/'
 // mongoose.connect('mongodb://localhost:27017/esya-test1'); //connect to the database
 
 const PORT = 5000;
-// const ADDRESS = '0.0.0.0'; //to listen to all incoming data
-const ADDRESS = '127.0.0.1'; //to listen to all localhost
+const ADDRESS = '0.0.0.0'; //to listen to all incoming data
+// const ADDRESS = '127.0.0.1'; //to listen to all localhost
 
 // var iotSockets = {};
 // var streamReq = {};
