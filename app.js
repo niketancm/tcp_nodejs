@@ -9,18 +9,6 @@ const URL = 'mongodb://localhost:27017/esya-test1'
 // mongoose.connect('mongodb://localhost:27017/esya-test'); //connect to the database
 // mongoose.connect('mongodb://localhost:27017/esya-test1'); //connect to the database
 
-// var db = mongoose.connection;
-
-// //check the connection to mongodb
-// db.on('error', function (err) {
-//     console.log('connection error', err);
-//     });
-    
-//     db.once('open', function () {
-//     console.log('connected to MONGO!.');
-//     });       
-
-
 const PORT = 5000;
 const ADDRESS = '0.0.0.0'; //to listen to all incoming data
 // const ADDRESS = '127.0.0.1'; //to listen to all localhost
@@ -79,7 +67,13 @@ function onClientConnected(socket) {
                     // return;
                 }else{//iot connections already there, insert data
                     //save the incoming data to the mongoose model to be inserted
-
+                    MongoClient.connect(URL, function(err, db){
+                        if(err) throw err;
+                        dbo = db.db("esya-test");
+                        var insertData = {
+                            
+                        }
+                    });
                     //Send the data to the clients in nodeSock
                     nodeSock.forEach(function (soc, client, nodeSock) {
                     soc.write(insert[9]);
