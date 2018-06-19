@@ -32,6 +32,11 @@ function onClientConnected(socket) {
     let clientName = `${socket.remoteAddress}:${socket.remotePort}`;
     // Logging the message on the server
     // socket.write("101\n")
+    //Handle the ECONNRESET error
+    socket.on('error', () => {
+        console.log('Got an error \n' + error);
+    });
+
     // Triggered on data received by this client    
     socket.on('data', (data) => {
         let temp = data.toString();
@@ -114,10 +119,5 @@ function onClientConnected(socket) {
             // socket.destroy();
             // console.log(iotSock.size);
         }
-    });
-    
-    //Handle the ECONNRESET error
-    socket.on('error', () => {
-        console.log('Got an error \n' + error);
     });
 }
