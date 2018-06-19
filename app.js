@@ -33,8 +33,9 @@ function onClientConnected(socket) {
     // Logging the message on the server
     // socket.write("101\n")
     //Handle the ECONNRESET error
-    socket.on('error', () => {
-        console.log('Got an error \n' + error);
+    socket.on('error', (err) => {
+        console.log('Got an error \n');
+        console.log(err);
     });
 
     // Triggered on data received by this client    
