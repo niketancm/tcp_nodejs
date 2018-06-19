@@ -66,7 +66,7 @@ function onClientConnected(socket) {
                     // socket.write("send\n");
                     return;
                 }else{//iot connections already there, insert data
-                    //save the incoming data to the mongoose model to be inserted
+                    //save the incoming data to the mongodb using native driver
                     var insertData = {
                         deviceId: insert[1],
                         unit: insert[2],
@@ -114,5 +114,10 @@ function onClientConnected(socket) {
             // socket.destroy();
             // console.log(iotSock.size);
         }
+    });
+    
+    //Handle the ECONNRESET error
+    socket.on('error', () => {
+        console.log('Got an error \n' + error);
     });
 }
