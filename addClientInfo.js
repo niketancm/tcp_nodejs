@@ -27,14 +27,17 @@ var deviceId = ['f60f6f09c53c47e788ee0955bb7d5331', '657d2f72e5617c932b79aff34a0
             console.log("CLIENT: supplying the IOT ID: ttkId10");
             client.write("ttkId10##");
         }else if(incomingData === "send"){
-            var  i = 4;
+            var  i = 0;
+            // var  i = 4;
             console.log("CLIENT: got 'send' from server: Sending the client Info\n");
             var interval1 = setInterval(function () {
-                if(i >= (7)){
+                if(i >= (3)){
+                // if(i >= (7)){
                     clearInterval(interval1);
                 }
                 // sendData = mess + tempData[i];
-                sendData = mess1 + deviceId[i] + "##";
+                sendData = mess + deviceId[i] + "##";
+                // sendData = mess1 + deviceId[i] + "##";
                 console.log(sendData);
                 client.write(sendData);
                 i++;
