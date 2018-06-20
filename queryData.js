@@ -34,12 +34,20 @@ const URL = 'mongodb://localhost:27017/'
 //     });
 
 //using distinct
+var result = [];
 mongodb.connect(URL, function(err, db){
     if(err) throw err;
     var dbo = db.db("esya-test");
     var coll = dbo.collection('clientInfo');
-    coll.distinct("deviceId", { "Location": "Coimbatore"}, function(err, res){
-        console.log(res);
+    var prom = new Promise(function (resolve, reject){
+        coll.distinct("deviceId", { "Location": "Coimbatore"}, function(err, res){
+        // console.log(res);
+        resolve(res);
+        });
     });
+
+    prom.then(function(res){
+        result = res;
+    })    
 });
 
