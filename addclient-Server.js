@@ -74,20 +74,16 @@ function onClientConnected(socket) {
                 }else{//iot connections already there, insert data
                     //save the incoming data to the mongodb using native driver
                     var insertData = {
-                        deviceId: insert[1],
-                        unit: insert[2],
-                        line: insert[3],
-                        modelName: insert[4],
-                        operation: insert[5],
+                        clientId: insert[1],
+                        Region: insert[2],
+                        Location: insert[3],
+                        Plant: insert[4],
+                        deviceId: insert[5],
                     };
                     mongodb.connect(URL, function(err, db){
                         if(err) throw err;
                         var dbo = db.db("esya-test");
-                        for(var i = 6; i < insert.length; i++){
-                            let para = insert[i].split('=');
-                            insertData[para[0]] = parseFloat(para[1]);
-                        }
-                        dbo.collection("ttk").insertOne(insertData, function(err, res){
+                        dbo.collection("clientInfo").insertOne(insertData, function(err, res){
                             if(err){
                                 console.log("Could not be saved\n" + err);
                             }else{
@@ -97,9 +93,6 @@ function onClientConnected(socket) {
                         });
                     });
                     //Send the data to the clients in nodeSock
-                    nodeSock.forEach(function (soc, client, nodeSock) {
-                    soc.write(insert[9]);
-                    });
                     // console.log(data.toString());
                     // console.log("This is the elements in dataQueue:" + dataQueue);
                 }
