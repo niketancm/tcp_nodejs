@@ -84,8 +84,8 @@ function onClientConnected(socket) {
                         if(err) throw err;
                         var dbo = db.db("esya-test");
                         for(var i = 6; i < insert.length; i++){
-                            let para = insert[i].split('=');
-                            insertData[para[0]] = parseFloat(para[1]);
+                            let param = insert[i].split('=');
+                            insertData[param[0]] = parseFloat(param[1]);
                         }
                         dbo.collection("ttk").insertOne(insertData, function(err, res){
                             if(err){
