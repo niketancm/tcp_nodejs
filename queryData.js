@@ -48,6 +48,7 @@ mongodb.connect(URL, function(err, db){
 
     prom.then(function(res){
         result = res;
+        console.log(result);
     })    
 });
 
