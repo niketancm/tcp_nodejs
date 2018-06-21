@@ -27,7 +27,7 @@ var mess = 'ttk,abac5afc8daf5ba851d8e7d819d621b7,unit-4,line2,2LtrCooker,heat-tr
             var  i = 1;
             console.log("CLIENT: got 'send' from server");
             var interval = setInterval(function () {
-                if(i >= (5000)){
+                if(i >= (100)){
                 // if(i >= (tempData.length)){
                     clearInterval(interval);
                 }
