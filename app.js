@@ -31,8 +31,8 @@ function onClientConnected(socket) {
     // Giving a name to this client
     let clientName = `${socket.remoteAddress}:${socket.remotePort}`;
     // Logging the message on the server
-    socket.write("101\n")
-    //Handle the ECONNRESET error
+    // socket.write("101\n")
+    //try to Handle the ECONNRESET error
     socket.on('error', (err) => {
         console.log('Got an error \n');
         console.log(err);
@@ -49,46 +49,50 @@ function onClientConnected(socket) {
         // dataQueue = data.toString().replace(/[\n\r]*$/, '');
         // dataQueue = data.toString();
         // console.log(dataQueue);
-        // console.log("This is the DATAQUEUE in 'SOCKET.ON'" + dataQueue);        
+        // console.log("This is the DATAQUEUE in 'SOCKET.ON'" + dataQueue);      
+        //check the deviceID if it is correct
+        //if it is correct deviceID send "deviceId and ok"
+        // socket.write("")
         // split the message
         incomingData = m.split('##');
         for( var i = 0; i < (incomingData.length - 1); i++){
             var insert = incomingData[i].split(',');
-            //register the scoket as a key value pair, key: clientname and value: socket
+            //register the socket as a key value pair, key: clientname and value: socket
             if(insert[0] === streamId){ //this is a req conn from the nodejs/express
                 if(!nodeSock.has(clientName)){
                     nodeSock.set(clientName, socket); //new connection
                 }else{
                     return; //connection already present
                 }
-            }else if(insert[0] === "#config"){
-                paraName = insert[3];
-                insertConfig = {
-                    deviceNum: insert[1],
-                    modelName: insert[2],
-                    paraName: insert[3],
-                    USL: insert[4],
-                    UCLx: insert[5],
-                    mean: insert[6],
-                    LCLx: insert[7],
-                    LSL: insert[8]
-                }
-                //insert the config data
-                mongodb.connect(URL, function(err, db){
-                    if(err) throw err;
-                    var dbo = db.db("esya-config");
-                    dbo.collection("config").insertOne(insertConfig, function(err, res){
-                        if(err){
-                            console.log("Could not be saved\n" + err);
-                        }else{
-                            console.log("Data saved\n");
-                        }
-                        db.close();
+            }else{//For iot connections
+                if(insert[0] === "#config"){
+                    paraName = insert[3];
+                    insertConfig = {
+                        deviceNum: insert[1],
+                        modelName: insert[2],
+                        paraName: insert[3],
+                        USL: insert[4],
+                        UCLx: insert[5],
+                        mean: insert[6],
+                        LCLx: insert[7],
+                        LSL: insert[8]
+                    }
+                    //insert the config data
+                    mongodb.connect(URL, function(err, db){
+                        if(err) throw err;
+                        var dbo = db.db("esya-config");
+                        dbo.collection("config").insertOne(insertConfig, function(err, res){
+                            if(err){
+                                console.log("Could not be saved\n" + err);
+                            }else{
+                                console.log("Data saved\n");
+                                socket.wrie("Config OK\n");
+                            }
+                            db.close();
+                        });
                     });
-                });
-            }else{
-                //For iot connections
-                //register the socket as a {key,value} pair, key: clientname and value: socket                
+                }
+                //register the socket as a {key,value} pair, key: clientname and value: socket  
                 if(!iotSock.has(clientName)){//new iot connectons
                     iotSock.set(clientName, socket);
                     // Logging the message on the server
