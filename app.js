@@ -122,7 +122,7 @@ function onClientConnected(socket) {
                     };
                     mongodb.connect(URL, function(err, db){
                         if(err) throw err;
-                        var dbo = db.db("esya-test");
+                        var dbo = db.db("testNew");
                         // for(var i = 6; i < insert.length; i++){
                         for(var i = 16; i < insert.length; i++){                            
                             let param = insert[i].split('=');
