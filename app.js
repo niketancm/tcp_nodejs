@@ -119,7 +119,6 @@ function onClientConnected(socket) {
                         option9: insert[13],
                         option10: insert[14],
                         date: insert[15],
-
                     };
                     mongodb.connect(URL, function(err, db){
                         if(err) throw err;
