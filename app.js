@@ -92,60 +92,61 @@ function onClientConnected(socket) {
                             db.close();
                         });
                     });
-                }
+                }else{
                 //register the socket as a {key,value} pair, key: clientname and value: socket  
-                if(!fromIot.has(clientName)){//new iot connectons
-                    //handle the deviceID checking also store as a {key, value} pair, with key: deviceId and value:socket
-                    fromIot.set(clientName, socket);
-                    // Logging the message on the server
-                    // console.log(`SERVER: IOT ${clientName} connected.`);
-                    // console.log(`SERVER: Sending 'send' to client to send the data`);
-                    // socket.write("send\n");
-                    socket.write(insert[0] + " OK \n");
-                    return;
-                }else{//iot connections already there, insert data
-                    //save the incoming data to the mongodb using native driver
-                    var insertData = {
-                        deviceId: insert[0],
-                        unitName: insert[1],
-                        operationName: insert[2],
-                        lineName: insert[3],
-                        modelName: insert[4],
-                        machineNo: insert[5],
-                        componentNo: insert[6],
-                        remarks: insert[7],
-                        reason: insert[8],
-                        action: insert[9],
-                        status: insert[10],
-                        option7: insert[11],
-                        option8: insert[12],
-                        option9: insert[13],
-                        option10: insert[14],
-                        date: insert[15],
-                    };
-                    mongodb.connect(URL, function(err, db){
-                        if(err) throw err;
-                        var dbo = db.db("testNew");
-                        // for(var i = 6; i < insert.length; i++){
-                        for(var i = 16; i < insert.length; i++){                            
-                            let param = insert[i].split('=');
-                            insertData[param[0]] = parseFloat(param[1]);
-                        }
-                        dbo.collection("transcation").insertOne(insertData, function(err, res){
-                            if(err){
-                                console.log("Could not be saved\n" + err);
-                            }else{
-                                console.log("Data saved\n");
+                    if(!fromIot.has(clientName)){//new iot connectons
+                        //handle the deviceID checking also store as a {key, value} pair, with key: deviceId and value:socket
+                        fromIot.set(clientName, socket);
+                        // Logging the message on the server
+                        // console.log(`SERVER: IOT ${clientName} connected.`);
+                        // console.log(`SERVER: Sending 'send' to client to send the data`);
+                        // socket.write("send\n");
+                        socket.write(insert[0] + " OK \n");
+                        return;
+                    }else{//iot connections already there, insert data
+                        //save the incoming data to the mongodb using native driver
+                        var insertData = {
+                            deviceId: insert[0],
+                            unitName: insert[1],
+                            operationName: insert[2],
+                            lineName: insert[3],
+                            modelName: insert[4],
+                            machineNo: insert[5],
+                            componentNo: insert[6],
+                            remarks: insert[7],
+                            reason: insert[8],
+                            action: insert[9],
+                            status: insert[10],
+                            option7: insert[11],
+                            option8: insert[12],
+                            option9: insert[13],
+                            option10: insert[14],
+                            date: insert[15],
+                        };
+                        mongodb.connect(URL, function(err, db){
+                            if(err) throw err;
+                            var dbo = db.db("testNew");
+                            // for(var i = 6; i < insert.length; i++){
+                            for(var i = 16; i < insert.length; i++){                            
+                                let param = insert[i].split('=');
+                                insertData[param[0]] = parseFloat(param[1]);
                             }
-                            db.close();
+                            dbo.collection("transcation").insertOne(insertData, function(err, res){
+                                if(err){
+                                    console.log("Could not be saved\n" + err);
+                                }else{
+                                    console.log("Data saved\n");
+                                }
+                                db.close();
+                            });
                         });
-                    });
-                    //Send the data to the clients in fromNode
-                    fromNode.forEach(function (soc, client, fromNode) {
-                    soc.write(insert[9]);
-                    });
-                    // console.log(data.toString());
-                    // console.log("This is the elements in dataQueue:" + dataQueue);
+                        //Send the data to the clients in fromNode
+                        fromNode.forEach(function (soc, client, fromNode) {
+                        soc.write(insert[9]);
+                        });
+                        // console.log(data.toString());
+                        // console.log("This is the elements in dataQueue:" + dataQueue);
+                    }
                 }
             }
         }
