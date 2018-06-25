@@ -67,7 +67,7 @@ function onClientConnected(socket) {
             }else{ //handle config of each device
                 if(insert[0] === "#config"){
                     paraName = insert[3];
-                    insertConfig = {
+                    var insertConfig = {
                         deviceId: insert[1],
                         modelName: insert[2],
                         paraName: insert[3],
