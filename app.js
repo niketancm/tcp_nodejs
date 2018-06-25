@@ -102,7 +102,7 @@ function onClientConnected(socket) {
                         // console.log(`SERVER: Sending 'send' to client to send the data`);
                         // socket.write("send\n");
                         // socket.write(insert[0] + " OK \n");
-                        return;
+                        // return;
                     }else{//iot connections already there, insert data
                         //save the incoming data to the mongodb using native driver
                         var insertData = {
