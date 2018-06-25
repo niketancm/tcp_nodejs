@@ -13,10 +13,9 @@ const PORT = 5000;
 const ADDRESS = '0.0.0.0'; //to listen to all incoming data
 // const ADDRESS = '127.0.0.1'; //to listen to all localhost
 
-// var iotSockets = {};
-// var streamReq = {};
-var iotSock = new Map();
-var nodeSock =  new Map();
+
+var fromIot = new Map();
+var fromNode =  new Map();
 var iotId = "ttkId10";
 var streamId = "ttknode10";
 var socket;
@@ -59,8 +58,8 @@ function onClientConnected(socket) {
             var insert = incomingData[i].split(',');
             //register the socket as a key value pair, key: clientname and value: socket
             if(insert[0] === streamId){ //this is a req conn from the nodejs/express
-                if(!nodeSock.has(clientName)){
-                    nodeSock.set(clientName, socket); //new connection
+                if(!fromNode.has(clientName)){
+                    fromNode.set(clientName, socket); //new connection
                 }else{
                     return; //connection already present
                 }
@@ -94,9 +93,9 @@ function onClientConnected(socket) {
                     });
                 }
                 //register the socket as a {key,value} pair, key: clientname and value: socket  
-                if(!iotSock.has(clientName)){//new iot connectons
+                if(!fromIot.has(clientName)){//new iot connectons
                     //handle the deviceID checking also store as a {key, value} pair, with key: deviceId and value:socket
-                    iotSock.set(clientName, socket);
+                    fromIot.set(clientName, socket);
                     // Logging the message on the server
                     // console.log(`SERVER: IOT ${clientName} connected.`);
                     // console.log(`SERVER: Sending 'send' to client to send the data`);
@@ -140,8 +139,8 @@ function onClientConnected(socket) {
                             db.close();
                         });
                     });
-                    //Send the data to the clients in nodeSock
-                    nodeSock.forEach(function (soc, client, nodeSock) {
+                    //Send the data to the clients in fromNode
+                    fromNode.forEach(function (soc, client, fromNode) {
                     soc.write(insert[9]);
                     });
                     // console.log(data.toString());
@@ -154,15 +153,13 @@ function onClientConnected(socket) {
     socket.on('end', () => {
         // Logging this message on the server
         console.log(`${clientName} disconnected.`);
-        //remove the sockets from the iotSock or nodeSock map
-        if(iotSock.has(clientName)){
-            iotSock.delete(clientName);
-            // socket.destroy();
-            // console.log(iotSock.size);                
-        }else if(nodeSock.has(clientName)){
-            nodeSock.delete(clientName);
-            // socket.destroy();
-            // console.log(iotSock.size);
+        //remove the sockets from the fromIot or fromNode map
+        if(fromIot.has(clientName)){
+            fromIot.delete(clientName);
+            // console.log(fromIot.size);                
+        }else if(fromNode.has(clientName)){
+            fromNode.delete(clientName);
+            // console.log(fromIot.size);
         }
     });
 }
