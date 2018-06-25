@@ -1,8 +1,13 @@
 var speratedArray = [];
-var message = "ttkId10, India, Bangalore, ttk_magadi, line1, d316, shankar, I0019, temperature, 23.04" + "##";
+// var message = "ttkId10, India, Bangalore, ttk_magadi, line1, d316, shankar, I0019, temperature, 23.04" + "##";
 // var message2 = "ttkId10, India, Chennai, ttk_hosur, line1, d316, shankar, I0019, temperature, 23.04" + "##";
 // var message3 = "ttkId10, India, Pune, ttk_shaniwarWada, line1, d316, shankar, I0019, temperature, 23.04" + "##";
+var message = 'f60f6f09c53c47e788ee0955bb7d5331,unit-1,heat-treatment,line-1,large-pan,machine-1,component-1,good,,,,,,,,16august';
 speratedArray = message.split(',');
+console.log(speratedArray.length);
+for( var i = 0; i < (speratedArray.length); i++){    
+    console.log(speratedArray[i]);
+}
 // // console.log(speratedArray[9]);
 // // console.log(parseFloat(speratedArray[9]));
 // speratedArray[9] = parseFloat(speratedArray[9]);
@@ -26,35 +31,35 @@ speratedArray = message.split(',');
 // console.log(typeof(persons));
 // console.log(persons.has('niketan'));
 // console.log(persons.remove(name1));
-var spliMsg = [];
-var finalMsg = [];
-finalmsg = message;  //+ message2 + message3; 
-spliMsg = finalmsg.split('##');
-// console.log(finalmsg);
-console.log(spliMsg);
-console.log(" length: " + spliMsg.length );
-for( var i = 0; i < (spliMsg.length - 1); i++){    
-        // console.log(spliMsg[i] +" length: " + spliMsg.length + " " + i);        
-        // console.log(spliMsg[i]);                
-        finalMsg = spliMsg[i];
-}
-console.log("Final message: \n");
-console.log(finalMsg + "LEngth is: " + finalMsg.length);
+// var spliMsg = [];
+// var finalMsg = [];
+// finalmsg = message;  //+ message2 + message3; 
+// spliMsg = finalmsg.split('##');
+// // console.log(finalmsg);
+// console.log(spliMsg);
+// console.log(" length: " + spliMsg.length );
+// for( var i = 0; i < (spliMsg.length - 1); i++){    
+//         // console.log(spliMsg[i] +" length: " + spliMsg.length + " " + i);        
+//         // console.log(spliMsg[i]);                
+//         finalMsg = spliMsg[i];
+// }
+// console.log("Final message: \n");
+// console.log(finalMsg + "LEngth is: " + finalMsg.length);
 
-var message = "ttk, devideId, line1, unit-no1, operation1, thickness=0.10, height=10, weight=100";
-var othervalue = message.split(',');
-// message2 = "thickness=0.10"
-// parameter = message2.split('=')
-var myObj = {
-    device: othervalue[1],
-    line: othervalue[2],
-    unit: othervalue[3],
-    operation: othervalue[4]
-};
-for(var i = 5; i < othervalue.length; i++){
-    para = othervalue[i].split('=');
-    myObj[para[0]] = parseFloat(para[1]);
-}
+// var message = "ttk, devideId, line1, unit-no1, operation1, thickness=0.10, height=10, weight=100";
+// var othervalue = message.split(',');
+// // message2 = "thickness=0.10"
+// // parameter = message2.split('=')
+// var myObj = {
+//     device: othervalue[1],
+//     line: othervalue[2],
+//     unit: othervalue[3],
+//     operation: othervalue[4]
+// };
+// for(var i = 5; i < othervalue.length; i++){
+//     para = othervalue[i].split('=');
+//     myObj[para[0]] = parseFloat(para[1]);
+// }
 
 
-console.log(myObj);
+// console.log(myObj);
