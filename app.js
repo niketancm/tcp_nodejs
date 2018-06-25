@@ -61,6 +61,31 @@ function onClientConnected(socket) {
                 }else{
                     return; //connection already present
                 }
+            }else if(insert[0] === "#config"){
+                paraName = insert[3];
+                insertConfig = {
+                    deviceNum: insert[1],
+                    modelName: insert[2],
+                    paraName: insert[3],
+                    USL: insert[4],
+                    UCLx: insert[5],
+                    mean: insert[6],
+                    LCLx: insert[7],
+                    LSL: insert[8]
+                }
+                //insert the config data
+                mongodb.connect(URL, function(err, db){
+                    if(err) throw err;
+                    var dbo = db.db("esya-config");
+                    dbo.collection("config").insertOne(insertConfig, function(err, res){
+                        if(err){
+                            console.log("Could not be saved\n" + err);
+                        }else{
+                            console.log("Data saved\n");
+                        }
+                        db.close();
+                    });
+                });
             }else{
                 //For iot connections
                 //register the socket as a {key,value} pair, key: clientname and value: socket                
@@ -74,20 +99,33 @@ function onClientConnected(socket) {
                 }else{//iot connections already there, insert data
                     //save the incoming data to the mongodb using native driver
                     var insertData = {
-                        deviceId: insert[1],
-                        unit: insert[2],
-                        line: insert[3],
+                        deviceNum: insert[0],
+                        unitName: insert[1],
+                        operatinName: insert[2],
+                        lineName: insert[3],
                         modelName: insert[4],
-                        operation: insert[5],
+                        machineNo: insert[5],
+                        componentNo: insert[6],
+                        remarks: insert[7],
+                        reason: insert[8],
+                        action: insert[9],
+                        status: insert[10],
+                        option7: insert[11],
+                        option8: insert[12],
+                        option9: insert[13],
+                        option10: insert[14],
+                        date: insert[15],
+
                     };
                     mongodb.connect(URL, function(err, db){
                         if(err) throw err;
                         var dbo = db.db("esya-test");
-                        for(var i = 6; i < insert.length; i++){
+                        // for(var i = 6; i < insert.length; i++){
+                        for(var i = 16; i < insert.length; i++){                            
                             let param = insert[i].split('=');
                             insertData[param[0]] = parseFloat(param[1]);
                         }
-                        dbo.collection("ttk").insertOne(insertData, function(err, res){
+                        dbo.collection("transcation").insertOne(insertData, function(err, res){
                             if(err){
                                 console.log("Could not be saved\n" + err);
                             }else{
