@@ -64,11 +64,11 @@ function onClientConnected(socket) {
                 }else{
                     return; //connection already present
                 }
-            }else{//For iot connections
+            }else{ //handle config of each device
                 if(insert[0] === "#config"){
                     paraName = insert[3];
                     insertConfig = {
-                        deviceNum: insert[1],
+                        deviceId: insert[1],
                         modelName: insert[2],
                         paraName: insert[3],
                         USL: insert[4],
@@ -81,12 +81,13 @@ function onClientConnected(socket) {
                     mongodb.connect(URL, function(err, db){
                         if(err) throw err;
                         var dbo = db.db("esya-config");
+                        //config update to be handled
                         dbo.collection("config").insertOne(insertConfig, function(err, res){
                             if(err){
                                 console.log("Could not be saved\n" + err);
                             }else{
                                 console.log("Data saved\n");
-                                socket.wrie("Config OK\n");
+                                // socket.write("Config OK\n");
                             }
                             db.close();
                         });
@@ -94,18 +95,20 @@ function onClientConnected(socket) {
                 }
                 //register the socket as a {key,value} pair, key: clientname and value: socket  
                 if(!iotSock.has(clientName)){//new iot connectons
+                    //handle the deviceID checking also store as a {key, value} pair, with key: deviceId and value:socket
                     iotSock.set(clientName, socket);
                     // Logging the message on the server
                     // console.log(`SERVER: IOT ${clientName} connected.`);
                     // console.log(`SERVER: Sending 'send' to client to send the data`);
-                    socket.write("send\n");
+                    // socket.write("send\n");
+                    socket.write(insert[0] + " OK \n");
                     return;
                 }else{//iot connections already there, insert data
                     //save the incoming data to the mongodb using native driver
                     var insertData = {
-                        deviceNum: insert[0],
+                        deviceId: insert[0],
                         unitName: insert[1],
-                        operatinName: insert[2],
+                        operationName: insert[2],
                         lineName: insert[3],
                         modelName: insert[4],
                         machineNo: insert[5],
