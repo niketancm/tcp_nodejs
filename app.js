@@ -22,6 +22,7 @@ var socket;
 var dataQueue = [];
 var incomingData = [];
 var data;
+var paraName = "";
 
 let server = net.createServer(onClientConnected);
 server.listen(PORT, ADDRESS);
