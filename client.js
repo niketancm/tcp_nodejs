@@ -22,7 +22,7 @@ var mess = 'ttk,f60f6f09c53c47e788ee0955bb7d5331,unit-1,line2,2LtrCooker,heat-tr
         if(incomingData === "101"){
             // console.log(incomingData[0]);
             console.log("CLIENT: supplying the IOT ID: ttkId10");
-            // client.write("ttkId10##");
+            client.write("ttkId10##");
         }else if(incomingData === "send"){
             var  i = 1;
             console.log("CLIENT: got 'send' from server");
