@@ -137,7 +137,7 @@ function onClientConnected(socket) {
                                 }else{
                                     console.log("Data saved\n");
                                 }
-                                db.close();
+                                //db.close();
                             });
                         });
                         //Send the data to the clients in fromNode
