@@ -1,7 +1,7 @@
 const net = require('net');
 
-const HOST = '127.0.0.1';
-// const HOST = 'ec2-184-72-73-164.compute-1.amazonaws.com';
+// const HOST = '127.0.0.1';
+const HOST = 'ec2-184-72-73-164.compute-1.amazonaws.com';
 const PORT = 5000;
 // var mess = 'ttkId10,tn,hosur,p1,l1,m1,op1,d1,temp,'
 var mess = 'ttk,f60f6f09c53c47e788ee0955bb7d5331,unit-1,line2,2LtrCooker,heat-treatment,guauge=50,height=550,diameter=500,surfaceArea=1000'
@@ -19,11 +19,11 @@ var mess = 'ttk,f60f6f09c53c47e788ee0955bb7d5331,unit-1,line2,2LtrCooker,heat-tr
     client.on('data', function(data) {
         let incomingData = data.toString().replace(/[\n\r]*$/, '');
         console.log("data received:" + incomingData);
-        if(incomingData === "101"){
+        // if(incomingData === "101"){
             // console.log(incomingData[0]);
             console.log("CLIENT: supplying the IOT ID: ttkId10");
             client.write("ttkId10##");
-        }else if(incomingData === "send"){
+        // }else if(incomingData === "send"){
             var  i = 1;
             console.log("CLIENT: got 'send' from server");
             var interval = setInterval(function () {
@@ -37,7 +37,7 @@ var mess = 'ttk,f60f6f09c53c47e788ee0955bb7d5331,unit-1,line2,2LtrCooker,heat-tr
                 client.write(sendData);
                i++;    
             }, 800);
-        }
+        // }
     });
 
 // Add a 'close' event handler for the client socket

@@ -31,7 +31,7 @@ function onClientConnected(socket) {
     // Giving a name to this client
     let clientName = `${socket.remoteAddress}:${socket.remotePort}`;
     // Logging the message on the server
-    socket.write("101\n")
+    // socket.write("101\n")
     //Handle the ECONNRESET error
     socket.on('error', (err) => {
         console.log('Got an error \n');
@@ -69,8 +69,8 @@ function onClientConnected(socket) {
                     // Logging the message on the server
                     // console.log(`SERVER: IOT ${clientName} connected.`);
                     // console.log(`SERVER: Sending 'send' to client to send the data`);
-                    socket.write("send\n");
-                    return;
+                    // socket.write("send\n");
+                    // return;
                 }else{//iot connections already there, insert data
                     //save the incoming data to the mongodb using native driver
                     var insertData = {
