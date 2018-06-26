@@ -28,3 +28,4 @@ function myobj (myobj1, myobj2, "key1", "key2"){
 // console.log("SERVER:: " + incomingData);
                 // console.log(`SERVER: client ${clientName} connected.`);
 mongoexport --db esya-test1 --collection datamodels --type=csv --fields _id,REGION,LOCATION,PLANT,LINE,MODEL,OPERATOR,DEVICEID,PARAMETER,DATA --out /home/ubuntu/tcp_server/output.csv
+mongoexport --db esya-test --collection ttk --type=csv --fields _id,deviceId,unit,line,modelName,operation,guauge,pValue,height,pValue,diameter,pValue,surfaceArea,pValue --out /home/ubuntu/tcp_server/output.csv
