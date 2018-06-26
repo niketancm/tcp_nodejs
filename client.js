@@ -19,11 +19,11 @@ var mess = 'ttk,f60f6f09c53c47e788ee0955bb7d5331,unit-1,line2,2LtrCooker,heat-tr
     client.on('data', function(data) {
         let incomingData = data.toString().replace(/[\n\r]*$/, '');
         console.log("data received:" + incomingData);
-        // if(incomingData === "101"){
+        if(incomingData === "101"){
             // console.log(incomingData[0]);
             console.log("CLIENT: supplying the IOT ID: ttkId10");
-            client.write("ttkId10##");
-        // }else if(incomingData === "send"){
+            // client.write("ttkId10##");
+        }else if(incomingData === "send"){
             var  i = 1;
             console.log("CLIENT: got 'send' from server");
             var interval = setInterval(function () {
@@ -37,7 +37,7 @@ var mess = 'ttk,f60f6f09c53c47e788ee0955bb7d5331,unit-1,line2,2LtrCooker,heat-tr
                 client.write(sendData);
                i++;    
             }, 800);
-        // }
+        }
     });
 
 // Add a 'close' event handler for the client socket

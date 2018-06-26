@@ -32,6 +32,7 @@ function onClientConnected(socket) {
     let clientName = `${socket.remoteAddress}:${socket.remotePort}`;
     // Logging the message on the server
     // socket.write("101\n")
+    
     //Handle the ECONNRESET error
     socket.on('error', (err) => {
         console.log('Got an error \n');
