@@ -64,7 +64,7 @@ function onClientConnected(socket) {
                 }else{
                     return; //connection already present
                 }
-            }else{ //handle config of each device
+            }else{ //handle config of each device //handling of iot starts from here
                 if(insert[0] === "#config"){
                     paraName = insert[3];
                     var insertConfig = {
@@ -103,7 +103,7 @@ function onClientConnected(socket) {
                         // socket.write("send\n");
                         // socket.write(insert[0] + " OK \n");
                         // return;
-                    }else{//iot connections already there, insert data
+                    }//else{//iot connections already there, insert data
                         //save the incoming data to the mongodb using native driver
                         var insertData = {
                             deviceId: insert[0],
@@ -146,7 +146,7 @@ function onClientConnected(socket) {
                         });
                         // console.log(data.toString());
                         // console.log("This is the elements in dataQueue:" + dataQueue);
-                    }
+                    //}
                 }
             }
         }
